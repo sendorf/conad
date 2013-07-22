@@ -1,6 +1,6 @@
 class CreateServers < ActiveRecord::Migration
   def change
-    create_table :servers do |t|
+    create_table :servers, :force => true do |t|
       t.string :name
       t.text :description
       t.string :url
