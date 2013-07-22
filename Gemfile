@@ -7,6 +7,7 @@ gem 'rails-i18n' # , '~> 0.6.6'
 gem 'cancan', '~> 1.6.8'
 gem 'i18n-js'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'activerecord-postgresql-adapter'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
