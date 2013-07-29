@@ -13,7 +13,7 @@
 /db/structure.sql
 
 # Ignore all logfiles and tempfiles.
-/log/*.log
+/log/
 /tmp
 
 #Ignore the database path
