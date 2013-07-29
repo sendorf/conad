@@ -11,6 +11,8 @@ gem 'i18n-js'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'activerecord-postgresql-adapter'
 gem "watu_table_builder", :require => "table_builder", :git => "git://github.com/watu/table_builder.git"
+gem 'gon'
+gem 'backbone-on-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

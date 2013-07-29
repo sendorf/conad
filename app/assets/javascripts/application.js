@@ -16,23 +16,13 @@
 //= require backbone
 //= require moment.min
 //= require_tree ./moment-lang
-//= require comandes
-//= require_tree ../templates
-//= require_tree ./models
-//= require_tree ./collections
-//= require_tree ./views
-//= require_tree ./routers
+//= require conan
 //= require dataTables/jquery.dataTables
 //= require dataTables/jquery.dataTables.bootstrap
-//= require twitter/bootstrap/tab
-//= require twitter/bootstrap/modal
-//= require twitter/bootstrap/transition
-//= require twitter/bootstrap/collapse
-//= require twitter/bootstrap/dropdown
+//= require bootstrap.min
 //= require bootstrap-modalmanager
 //= require bootstrap-modal
-//= require rails.validations
-//= require rails.validations.simple_form
 //= require i18n
 //= require i18n/translations
 //= require_tree .
+
