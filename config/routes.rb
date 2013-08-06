@@ -57,6 +57,6 @@ Conan::Application.routes.draw do
   # match ':controller(/:action(/:id))(.:format)'
   resource :calendar
 
-  root :to => 'calendars#index'
+  root :to => 'calendars#show'
 
 end
