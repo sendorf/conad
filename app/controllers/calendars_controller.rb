@@ -1,13 +1,13 @@
 class CalendarsController < ApplicationController
 
 	def show
-	  	@date = params[:month] ? Date.parse(params[:month],"%Y-%m") : Date.today
+	  	@date = params[:month] ? DateTime.parse(params[:month],"%Y-%m-%d") : DateTime.now
 	  	@connections
 	end
 
 	def index
 		@connections
-	  	@date = params[:month] ? Date.parse(params[:month],"%Y-%m") : Date.today
+	  @date = params[:month] ? DateTime.parse(params[:month],"%Y-%m-%d") : DateTime.now
 	end
 
 end
