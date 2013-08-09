@@ -8,6 +8,9 @@ gem 'simple_form', '~> 2.0.3'
 gem 'rails-i18n' # , '~> 0.6.6'
 gem 'cancan', '~> 1.6.8'
 gem 'i18n-js'
+gem 'database_cleaner', '~> 0.8.0'
+gem 'faker' #needed in staging for db:seed
+gem 'factory_girl' # needed in staging for db:seed
 gem 'activerecord-postgresql-adapter'
 gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
 gem "watu_table_builder", :require => "table_builder", :git => "git://github.com/watu/table_builder.git"
