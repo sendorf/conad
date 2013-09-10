@@ -7,11 +7,9 @@
     <%=h( t('month.'+@date.strftime("%B")) + ' ' + @date.strftime("%Y"))%>
     <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d") %>
   </h2>
-  inicio
   <%= calendar_for @connections, :year => @date.year, :month => @date.month do |calendar| %>
     <%= calendar.day(:day_method => :start_time) do |date, connections| %>
       <%= date.day %>
     <% end %>
   <% end %>
- </br>fin
 </div>
