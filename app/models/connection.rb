@@ -11,4 +11,9 @@ class Connection < ActiveRecord::Base
 
   belongs_to :server
 
+  scope :server_connections,        lambda{|server| where(:server_id => server.id)}   
+  scope :month_connections,         lambda{|month| where(:month => month)}
+  scope :month_server_connections,  lambda{|month, server| where(["(server_id = ? AND month = ?)", server.id, month])}
+ 
+
 end

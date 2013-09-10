@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/jchunky/table_builder.git
+  revision: 861e57bc1c1cddcf877db950fb400226be15ea71
+  specs:
+    table_builder (0.0.3)
+
+GIT
   remote: git://github.com/rweng/jquery-datatables-rails.git
   revision: 494f752b8eb8350f33841c822a67d014c869219f
   specs:
@@ -169,6 +175,7 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   simple_form (~> 2.0.3)
   sqlite3
+  table_builder (= 0.0.3)!
   therubyracer
   uglifier (>= 1.0.3)
   watu_table_builder!

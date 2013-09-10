@@ -7,13 +7,11 @@
     <%=h( t('month.'+@date.strftime("%B")) + ' ' + @date.strftime("%Y"))%>
     <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d") %>
   </h2>
-
-<%= @date.strftime("%a") %>
-
-  <% calendar_for @connections, :year => @date.year, :month => @date.month do |calendar| %>
-    <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
-    <% calendar.day do |date, connections| %>
+  inicio
+  <%= calendar_for @connections, :year => @date.year, :month => @date.month do |calendar| %>
+    <%= calendar.day(:day_method => :start_time) do |date, connections| %>
       <%= date.day %>
     <% end %>
   <% end %>
+ </br>fin
 </div>

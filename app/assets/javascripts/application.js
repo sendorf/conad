@@ -26,3 +26,6 @@
 //= require i18n/translations
 //= require_tree .
 
+$(function() {
+  $("#article_start_time").datepicker();
+});

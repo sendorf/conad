@@ -11,10 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130808094142) do
+ActiveRecord::Schema.define(:version => 20130809111249) do
 
   create_table "connections", :force => true do |t|
-    t.string   "server_id"
     t.string   "user"
     t.string   "week_day"
     t.string   "month_day"
@@ -24,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20130808094142) do
     t.datetime "updated_at",      :null => false
     t.datetime "start_time"
     t.datetime "end_time"
+    t.integer  "server_id"
   end
 
   create_table "servers", :force => true do |t|
