@@ -7,8 +7,9 @@
     <%=h( t('month.'+@date.strftime("%B")) + ' ' + @date.strftime("%Y"))%>
     <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d") %>
   </h2>
-  <%= calendar_for @connections, :year => @date.year, :month => @date.month, :class => 'table table-hover',
-                                :first_day_of_week => 1  do |calendar| %>
+  <%= calendar_for @connections, :year => @date.year, :month => @date.month, 
+                                 :html =>{:class=>'table table-hover'}, 
+                                 :first_day_of_week => 1  do |calendar| %>
     <%= calendar.head(t('week_day.Monday'),t('week_day.Tuesday'),t('week_day.Wednesday'),t('week_day.Thursday'),
                       t('week_day.Friday'), t('week_day.Saturday'), t('week_day.Sunday'),) %>
     <%= calendar.day(:day_method => :start_time) do |date, connections| %>
