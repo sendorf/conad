@@ -34,14 +34,20 @@
 
 #calendar td {
   background: #FFF;
-  color: #777;
+  color: #000000;
   height: 80px;
   vertical-align: top;
   font-size: 16px;
+  background-color: #FFFFCC;
+}
+
+#calendar .weekend {
+  background-color: #CCFFCC ;
 }
 
 #calendar .notmonth {
-  color: #CCC;
+  color: #404040;
+  background-color: #E0E0E0 ;
 }
 
 #calendar #month {
