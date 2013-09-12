@@ -2,10 +2,13 @@
 
 <div id="calendar">
   <h2 id="month">
-    <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m-%d") %>
+    <button type="button" class="btn btn-warning"><%= t('navbar.create_server') %></button>
+    <%= link_to "<", {:month => (@date.beginning_of_month-1).strftime("%Y-%m-%d")}, 
+                     {:class => 'col-md-offset-1' }%>
     <% trans_month = @date.strftime("%B")%>
     <%=h( t('month.'+@date.strftime("%B")) + ' ' + @date.strftime("%Y"))%>
     <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d") %>
+    <button type="button" class="btn btn-warning col-md-offset-1"><%= t('navbar.edit_server') %></button>
   </h2>
   <div id="not_calendar">
   </div>

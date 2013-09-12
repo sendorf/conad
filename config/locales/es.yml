@@ -22,3 +22,6 @@ es:
     Friday: 'Viernes'
     Saturday: 'Sábado'
     Sunday: 'Domingo'
+  navbar:
+    create_server: 'Nuevo Servidor'
+    edit_server: 'Editar Servidor'
