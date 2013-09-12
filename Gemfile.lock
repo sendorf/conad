@@ -64,6 +64,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    country_select (1.2.0)
     database_cleaner (0.8.0)
     eco (1.0.0)
       coffee-script
@@ -162,6 +163,7 @@ DEPENDENCIES
   backbone-on-rails
   cancan (~> 1.6.8)
   coffee-rails (~> 3.2.1)
+  country_select
   database_cleaner (~> 0.8.0)
   execjs
   factory_girl
