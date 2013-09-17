@@ -6,4 +6,4 @@ alwaysdata_env = File.join(Rails.root, 'config', 'alwaysdata_env.rb')
 load(alwaysdata_env) if File.exists?(alwaysdata_env)
 
 # Initialize the rails application
-Conan::Application.initialize!
+Conad::Application.initialize!

@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Conan::Application.load_tasks
+Conad::Application.load_tasks

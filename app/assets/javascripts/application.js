@@ -16,7 +16,7 @@
 //= require backbone
 //= require moment.min
 //= require_tree ./moment-lang
-//= require conan
+//= require conad
 //= require dataTables/jquery.dataTables
 //= require dataTables/jquery.dataTables.bootstrap
 //= require bootstrap.min

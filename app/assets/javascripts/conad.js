@@ -1,13 +1,13 @@
-window.Conan = {
+window.Conad = {
   Models: {},
   Collections: {},
   Views: {},
   Routers: {},
   initialize: function() {
-    Conan.appRouter = new Conan.Routers.AppRouter();
+    Conad.appRouter = new Conad.Routers.AppRouter();
 
     Backbone.View.prototype.goTo = function (loc) {
-      Conan.appRouter.navigate(loc, true);
+      Conad.appRouter.navigate(loc, true);
     };
 
     Backbone.View.prototype.renderNested = function( view, selector ) {
@@ -17,7 +17,7 @@ window.Conan = {
 
     // Hack to make backbone handle different querystrings (xxx?yyy=xxx) as different queries
     window.addEventListener("popstate", function(e) {
-      Conan.appRouter.navigate(location.pathname + location.search, {trigger:true, replace: true});
+      Conad.appRouter.navigate(location.pathname + location.search, {trigger:true, replace: true});
     });
 
     Backbone.history.start({
@@ -28,7 +28,7 @@ window.Conan = {
 };
 
 $(document).ready(function(){
-  Conan.initialize();
+  Conad.initialize();
 
   // configure moment & i18n to the selected locale
   var defaultLocale = 'es';
@@ -39,21 +39,21 @@ $(document).ready(function(){
   I18n.fallbacks     = true;
 
   $('[data-role="tab"], [data-role="pill"]').each(function(){
-    new Conan.Views.TabsView({el: this}).delegateEvents();
+    new Conad.Views.TabsView({el: this}).delegateEvents();
 
     if(!location.search) {
       var activeTabId = $(this).find('.tab-pane.active').first().attr('id');
       var search = "?tab=" + activeTabId;
-      Conan.appRouter.navigate(location.pathname + search, {trigger:false, replace: true});
+      Conad.appRouter.navigate(location.pathname + search, {trigger:false, replace: true});
     }
   });
 
   $('[data-view="CommentsView"]').each(function(){
-    new Conan.Views.CommentsView({el: this}).parse();
+    new Conad.Views.CommentsView({el: this}).parse();
     document.getElementById('comments-end').scrollIntoView();
   });
 
   $('.js-scenes-view').each(function(){
-    new Conan.Views.ScenesView({el: this}).parse();
+    new Conad.Views.ScenesView({el: this}).parse();
   });
 });
