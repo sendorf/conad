@@ -2,13 +2,27 @@
 
 <div id="calendar">
   <h2 id="month">
-    <button type="button" class="btn btn-warning"><%= t('navbar.create_server') %></button>
-    <%= link_to "<", {:month => (@date.beginning_of_month-1).strftime("%Y-%m-%d")}, 
-                     {:class => 'col-md-offset-1' }%>
+    <%= link_to t('calendar_title.create_server'),
+                new_server_path,
+                :class => 'btn btn-warning',
+                :type => 'button',
+                :icon => 'icon-plus',
+                :title => t('calendar_title.create_server'),
+    %>
+    <%= link_to "<", {:month => (@date.beginning_of_month-1).strftime("%Y-%m-%d")},
+                     {:title => t('calendar_title.previous_month'),
+                      :class => 'col-md-offset-1' } %>
     <% trans_month = @date.strftime("%B")%>
-    <%=h( t('month.'+@date.strftime("%B")) + ' ' + @date.strftime("%Y"))%>
-    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d") %>
-    <button type="button" class="btn btn-warning col-md-offset-1"><%= t('navbar.edit_server') %></button>
+    <%=h( t('month.'+@date.strftime("%B")) + ' ' + @date.strftime("%Y")) %>
+    <%= link_to ">",  {:month => (@date.end_of_month+1).strftime("%Y-%m-%d")}, 
+                      {:title => t('calendar_title.next_month')} %>
+    <%= link_to t('calendar_title.edit_server'),
+                new_server_path,
+                :class => 'btn btn-warning col-md-offset-1',
+                :type => 'button',
+                :icon => 'icon-plus',
+                :title => t('calendar_title.edit_server'),
+    %>
   </h2>
   <div id="not_calendar">
   </div>

@@ -1,6 +1,5 @@
 es:
-  hello: "Hello world"
-  calendar: Calendario
+  calendar: 'Calendario'
   month:
     January: 'Enero'
     February: 'Febrero'
@@ -22,6 +21,24 @@ es:
     Friday: 'Viernes'
     Saturday: 'Sábado'
     Sunday: 'Domingo'
-  navbar:
+  calendar_title:
     create_server: 'Nuevo Servidor'
     edit_server: 'Editar Servidor'
+    previous_month: 'Mes Anterior'
+    next_month: 'Mes Siguiente'
+  server:
+    new: 'Nuevo Servidor'
+  simple_form:
+    labels:
+      defaults:
+        name: 'Nombre del Servidor'
+        user: 'Usuario'
+        password: 'Contraseña'
+        url: 'URL del Servidor'
+        description: 'Descripción'
+    hints:
+      defaults:
+        user: 'Nombre de usuario ssh'
+        password: 'Contraseña del usuario ssh'
+    placeholders:
+      defaults:

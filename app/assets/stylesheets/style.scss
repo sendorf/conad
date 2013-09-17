@@ -69,7 +69,7 @@ $radius: 3px;
 
 #calendar .notmonth {
   color: #404040;
-  background-color: #E0E0E0 ;
+  background-color: #3366CC;
 }
 
 #calendar #month {
@@ -79,10 +79,15 @@ $radius: 3px;
   text-align: center;
 }
 
-#calendar #month a, #calendar #month a:hover {
+#calendar #month a,{
   text-decoration: none;
   padding: 0 10px;
   color: #999;
+}
+
+#calendar #month .btn {
+  color: #FFF;
+  padding: 6px 12px;
 }
 
 #calendar .today {
