@@ -10,13 +10,19 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery
-//= require jquery_ujs
 //= require underscore
 //= require backbone
 //= require moment.min
 //= require_tree ./moment-lang
 //= require conad
+//= require jquery
+//= require jquery_ujs
+//= require bootstrap
+//= require twitter/bootstrap/tab
+//= require twitter/bootstrap/modal
+//= require twitter/bootstrap/transition
+//= require twitter/bootstrap/collapse
+//= require twitter/bootstrap/dropdown
 //= require dataTables/jquery.dataTables
 //= require dataTables/jquery.dataTables.bootstrap
 //= require bootstrap.min
@@ -25,7 +31,3 @@
 //= require i18n
 //= require i18n/translations
 //= require_tree .
-
-$(function() {
-  $("#article_start_time").datepicker();
-});

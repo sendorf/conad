@@ -18,6 +18,9 @@ gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-ra
 gem "watu_table_builder", :require => "table_builder", :git => "git://github.com/watu/table_builder.git"
 gem 'gon'
 gem 'backbone-on-rails'
+gem 'sass-rails',   '~> 3.2.3'
+gem 'bootstrap-sass-rails'
+gem 'coffee-rails', '~> 3.2.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
