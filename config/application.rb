@@ -16,7 +16,9 @@ module Conad
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += %W(#{config.root}/app/services)
+    config.autoload_paths += %W(#{config.root}/lib)
+
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -31,7 +33,8 @@ module Conad
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
+    config.i18n.available_locales = [:es, :en]
+    config.i18n.default_locale = :es
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -45,7 +48,7 @@ module Conad
     # Use SQL instead of Active Record's schema dumper when creating the database.
     # This is necessary if your schema can't be completely dumped by the schema dumper,
     # like if you have constraints or database-specific column types
-    # config.active_record.schema_format = :sql
+    config.active_record.schema_format = :sql
 
     # Enforce whitelist mode for mass assignment.
     # This will create an empty whitelist of attributes available for mass-assignment for all models
@@ -56,9 +59,20 @@ module Conad
     # Enable the asset pipeline
     config.assets.enabled = true
 
-    config.i18n.available_locales = :es
-
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Allows easy precompilation on development (if false)
+    config.assets.initialize_on_precompile = true # enabled due to i18n-js
+    # config.assets.initialize_on_precompile = false #disabled due to heroku
+
+    config.generators do |g|
+      g.stylesheets false
+      g.test_framework false
+      g.fixture_framework false
+      g.assets false
+      g.helper false
+      g.view_specs false
+    end
   end
 end
