@@ -10,12 +10,12 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require conad
 //= require jquery
 //= require jquery_ujs
 //= require dataTables/jquery.dataTables
 //= require dataTables/jquery.dataTables.bootstrap
-//= require bootstrap.min
+//= require twitter/bootstrap
 //= require i18n
 //= require i18n/translations
+//= require conad
 
