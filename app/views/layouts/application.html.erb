@@ -7,7 +7,6 @@
   <title>CONAD - <%= h(get_title(t("untitled"))) %></title>
   <%= include_gon %>
 
-  <meta name="viewport" content="width=device-width">
   <link rel="shortcut icon" href="<%= asset_path "favicon.ico" %>" />
 
   <link href='http://fonts.googleapis.com/css?family=Offside' rel='stylesheet' type='text/css'>
@@ -16,11 +15,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+  <nav class="navbar-inverse navbar-static-top" role="navigation">
     <div class="navbar-inner">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <button type="button" class="navbar-toggle" data-toggle="collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
