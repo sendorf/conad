@@ -26,6 +26,8 @@ es:
     edit_server: 'Editar Servidor'
     previous_month: 'Mes Anterior'
     next_month: 'Mes Siguiente'
+  navbar:
+    servers: 'Servidores'
   server:
     new: 'Nuevo Servidor'
   simple_form:

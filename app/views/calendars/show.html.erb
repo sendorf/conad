@@ -2,6 +2,7 @@
 
 <div id="calendar">
   <h2 id="month">
+
     <%= link_to t('calendar_title.create_server'),
                 new_server_path,
                 :class => 'btn btn-warning',
@@ -16,12 +17,11 @@
     <%=h( t('month.'+@date.strftime("%B")) + ' ' + @date.strftime("%Y")) %>
     <%= link_to ">",  {:month => (@date.end_of_month+1).strftime("%Y-%m-%d")}, 
                       {:title => t('calendar_title.next_month')} %>
-    <%= link_to t('calendar_title.edit_server'),
+    <%= link_to "#{t('calendar_title.edit_server')}",
                 new_server_path,
                 :class => 'btn btn-warning col-md-offset-1',
                 :type => 'button',
-                :icon => 'icon-plus',
-                :title => t('calendar_title.edit_server'),
+                :title => t('calendar_title.edit_server')
     %>
   </h2>
   <div id="not_calendar">

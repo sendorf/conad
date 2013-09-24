@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
 
 	before_filter :set_locale
-  before_filter :set_server
+  before_filter :set_servers
+  before_filter :set_current_server
 
   protect_from_forgery
 
@@ -9,8 +10,12 @@ class ApplicationController < ActionController::Base
   	I18n.locale = :es
 	end
 
-  def set_server
-    @current_server = Server.find(1)
+  def set_current_server
+    @current_server = Server.find(4)
+  end
+
+  def set_servers
+    @servers = Server.all
   end
 
 end

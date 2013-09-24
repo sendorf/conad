@@ -1,7 +1,8 @@
 @import "bootstrap.css";
-@import "bootstrap-responsive.css";
-@import "bootstrap-theme.css";
+@import "bootstrap-theme.min.css";
 @import "bootstrap-modal.css";
+@import "bootstrap-responsive.min.css";
+@import "bootstrap.css";
 
 
 
@@ -219,3 +220,20 @@ $radius: 3px;
   color: #999 !important;
   background-color: transparent !important;
 }
+
+.centered-nav > li > a{
+  text-align:center;
+  margin: auto;
+  position: relative;
+}
+
+nav .centered-nav{
+  text-align: center;
+  margin-left: 34%;
+  position: relative;
+}
+
+.nav .centered-li{
+  padding-left: 50%;
+}
+
