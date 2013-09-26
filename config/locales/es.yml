@@ -30,6 +30,7 @@ es:
     servers: 'Servidores'
   server:
     new: 'Nuevo Servidor'
+    edit: 'Editar Servidor %{server}'
   simple_form:
     labels:
       defaults:

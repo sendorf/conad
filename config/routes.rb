@@ -58,8 +58,6 @@ Conad::Application.routes.draw do
   resource :calendar, :only => :show 
 
   resources :servers, only: [:edit, :new]
-  match "/servers" => "servers#create", :as => 'create_server', :via => :post
-
 
   root :to => 'calendars#show'
 

@@ -30,7 +30,9 @@
               <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <% @servers.each do |server| %>
-                <li><a href="/"><%= server.name%></a></li>
+                <li>
+                  <%= link_to server.name ,root_path %>
+                </li>
                 <li class="divider"></li>
               <% end %>
             </ul>

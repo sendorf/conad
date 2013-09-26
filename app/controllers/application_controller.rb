@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   before_filter :set_servers
   before_filter :set_current_server
 
+  def change_server(server)
+    @current_server = server
+  end
+
   protect_from_forgery
 
 	def set_locale

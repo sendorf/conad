@@ -3,7 +3,8 @@
 <div id="calendar">
   <h2 id="month">
 
-    <%= link_to t('calendar_title.create_server'),
+    <%= link_to "<i class='glyphicon glyphicon-plus white-icon'></i>
+                #{t('calendar_title.create_server')}".html_safe,
                 new_server_path,
                 :class => 'btn btn-warning',
                 :type => 'button',
@@ -17,8 +18,9 @@
     <%=h( t('month.'+@date.strftime("%B")) + ' ' + @date.strftime("%Y")) %>
     <%= link_to ">",  {:month => (@date.end_of_month+1).strftime("%Y-%m-%d")}, 
                       {:title => t('calendar_title.next_month')} %>
-    <%= link_to "#{t('calendar_title.edit_server')}",
-                new_server_path,
+    <%= link_to "<i class='glyphicon glyphicon-wrench white-icon'></i>
+                #{t('calendar_title.edit_server')}".html_safe,
+                edit_server_path(@current_server),
                 :class => 'btn btn-warning col-md-offset-1',
                 :type => 'button',
                 :title => t('calendar_title.edit_server')
