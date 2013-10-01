@@ -221,19 +221,15 @@ $radius: 3px;
   background-color: transparent !important;
 }
 
-.centered-nav > li > a{
+.navbar .nav,
+.navbar .nav > li {
+  float:none;
+  display:inline-block;
+  *display:inline; /* ie7 fix */
+  *zoom:1; /* hasLayout ie7 trigger */
+  vertical-align: top;
+}
+
+.navbar-inner {
   text-align:center;
-  margin: auto;
-  position: relative;
 }
-
-nav .centered-nav{
-  text-align: center;
-  margin-left: 34%;
-  position: relative;
-}
-
-.nav .centered-li{
-  padding-left: 50%;
-}
-
