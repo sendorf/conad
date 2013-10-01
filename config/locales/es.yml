@@ -29,6 +29,7 @@ es:
   navbar:
     servers: 'Servidores'
   server:
+    calendar: 'Calendario del Servidor %{server}'
     new: 'Nuevo Servidor'
     edit: 'Editar Servidor %{server}'
   simple_form:

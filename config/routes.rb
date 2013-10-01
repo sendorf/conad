@@ -57,7 +57,7 @@ Conad::Application.routes.draw do
   # match ':controller(/:action(/:id))(.:format)'
   resource :calendar, :only => :show 
 
-  resources :servers, only: [:edit, :new]
+  resources :servers, only: [:edit, :new, :show]
 
   root :to => 'calendars#show'
 

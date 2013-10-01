@@ -5,7 +5,13 @@ class ServersController < ApplicationController
 	end
 
 	def edit
-		@server = @current_server
+		@server = Server.find(params[:id])
+	end
+
+	def show
+		@server = Server.find(params[:id])
+		@date = params[:month] ? DateTime.parse(params[:month],"%Y-%m-%d") : DateTime.now
+	  @connections = Connection.all
 	end
 
 end

@@ -1,59 +1,18 @@
-window.Conad = {
-  Models: {},
-  Collections: {},
-  Views: {},
-  Routers: {},
-  initialize: function() {
-    Conad.appRouter = new Conad.Routers.AppRouter();
+$(function(){
 
-    Backbone.View.prototype.goTo = function (loc) {
-      Conad.appRouter.navigate(loc, true);
-    };
+  //var server = document.getElementsByClassName("servers")[0];
 
-    Backbone.View.prototype.renderNested = function( view, selector ) {
-      var $el = (selector instanceof $) ? selector : this.$( selector );
-      view.setElement($el).render();
-    };
+  //var server_id =server.getAttribute("data-change-server-id")
 
-    // Hack to make backbone handle different querystrings (xxx?yyy=xxx) as different queries
-    window.addEventListener("popstate", function(e) {
-      Conad.appRouter.navigate(location.pathname + location.search, {trigger:true, replace: true});
-    });
+  //alert(server_id);
 
-    Backbone.history.start({
-      pushState: true,
-      hashChange: false
-    });
-  }
-};
+  // Collapse togglers fix
+  $(document).on('click', "li a[data-change-server-id]", function(event){
+    event.stopPropagation();
+    event.preventDefault();
 
-$(document).ready(function(){
-  Conad.initialize();
-
-  // configure moment & i18n to the selected locale
-  var defaultLocale = 'es';
-  var locale = $('html').attr('lang') || defaultLocale;
-  moment.lang(locale);
-  I18n.defaultLocale = defaultLocale;
-  I18n.locale        = locale;
-  I18n.fallbacks     = true;
-
-  $('[data-role="tab"], [data-role="pill"]').each(function(){
-    new Conad.Views.TabsView({el: this}).delegateEvents();
-
-    if(!location.search) {
-      var activeTabId = $(this).find('.tab-pane.active').first().attr('id');
-      var search = "?tab=" + activeTabId;
-      Conad.appRouter.navigate(location.pathname + search, {trigger:false, replace: true});
-    }
+    gon.server_id = this.getAttribute("data-change-server-id");
   });
 
-  $('[data-view="CommentsView"]').each(function(){
-    new Conad.Views.CommentsView({el: this}).parse();
-    document.getElementById('comments-end').scrollIntoView();
-  });
 
-  $('.js-scenes-view').each(function(){
-    new Conad.Views.ScenesView({el: this}).parse();
-  });
 });
