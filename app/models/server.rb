@@ -1,29 +1,35 @@
 class Server < ActiveRecord::Base
 
-  before_create :set_aes_key
+  attr_accessible :description, :name, :password, :url, :user, :password_confirmation
 
-  attr_accessible :description, :name, :password, :url, :user
+  attr_accessor :password
 
   validates_presence_of :name
   validates_presence_of :url
   validates_presence_of :user
-  validates :password,
+  validates  :password,
              :presence => true,
              :confirmation => true,
-             :if => lambda{ new_record? }
+             :on => :create
 
   has_many :connections
 
-  def password=(new_password)
-
-    @password = AES.encrypt(new_password, self.aes_key)
-    self.password_hash = @password
-
+  def password
+    AES.decrypt(self.password_hash, self.aes_key)
   end
 
-  private
-    def set_aes_key
-      self.aes_key = AES.key
+  def password=(new_password)
+
+    if self.aes_key
+      @password = AES.encrypt(new_password, self.aes_key)
+      self.password_hash = @password
+    else
+      @key = AES.key
+      @password = AES.encrypt(new_password, @key)
+      self.password_hash = @password
+      self.aes_key = @key
     end
+
+  end
 
 end
