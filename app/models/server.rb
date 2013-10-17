@@ -15,21 +15,14 @@ class Server < ActiveRecord::Base
   has_many :connections
 
   def password
-    AES.decrypt(self.password_hash, self.aes_key)
+    AES.decrypt(self.hash, self.hash2)
   end
 
   def password=(new_password)
-
-    if self.aes_key
-      @password = AES.encrypt(new_password, self.aes_key)
-      self.password_hash = @password
-    else
-      @key = AES.key
-      @password = AES.encrypt(new_password, @key)
-      self.password_hash = @password
-      self.aes_key = @key
-    end
-
+    @key = AES.key
+    @password = AES.encrypt(new_password, @key)
+    self.hash = @password
+    self.hash2 = @key
   end
 
 end
