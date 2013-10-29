@@ -101,6 +101,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.23)
     multi_json (1.7.7)
+    net-ssh (2.6.6)
     pg (0.15.1)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -175,6 +176,7 @@ DEPENDENCIES
   i18n-js
   jquery-datatables-rails!
   jquery-rails
+  net-ssh
   rails (= 3.2.11)
   rails-i18n
   sass-rails (~> 3.2.3)

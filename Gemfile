@@ -21,6 +21,7 @@ gem 'sass-rails',   '~> 3.2.3'
 gem 'bootstrap-sass-rails'
 gem 'coffee-rails', '~> 3.2.1'
 gem "aes", "~> 0.5.0", :require => 'aes'
+gem 'net-ssh', :require => 'net/ssh'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
