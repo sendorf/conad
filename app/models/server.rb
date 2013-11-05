@@ -25,7 +25,7 @@ class Server < ActiveRecord::Base
 
     stdout = ""
 
-    Net::SSH.start(self.url, self.user, :password => self.password) do |ssh|
+    Net::SSH.start(self.url, self.user, :password => password) do |ssh|
 
       # capture only stdout with 'last' command
       ssh.exec!("last") do |channel, stream, data|
