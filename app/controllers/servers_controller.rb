@@ -14,7 +14,7 @@ class ServersController < ApplicationController
 		@servers = Server.all
 		@server = Server.find(params[:id])
 		@date = params[:month] ? DateTime.parse(params[:month],"%Y-%m-%d") : DateTime.now
-	  @connections = Connection.all
+	  @connections = Connection.user_connections(@server)
 	end
 
 	def create

@@ -43,6 +43,13 @@
                       t('week_day.Friday'), t('week_day.Saturday'), t('week_day.Sunday'),) %>
     <%= calendar.day(:day_method => :start_time) do |date, connections| %>
       <%= date.day %>
+      <% if @server && connections %>
+        <ul>
+          <% for connection in connections %>
+            <li><%= connection.user %></li>
+          <% end %>
+        </ul>
+      <% end %>
     <% end %>
   <% end %>
 </div>

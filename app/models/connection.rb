@@ -8,9 +8,46 @@ class Connection < ActiveRecord::Base
 
   belongs_to :server
 
-  scope :server_connections,        lambda{|server| where(:server_id => server.id)}   
-  scope :month_connections,         lambda{|month| where(:month => month)}
-  scope :month_server_connections,  lambda{|month, server| where(["(server_id = ? AND month = ?)", server.id, month])}
+  scope :server_connections,        lambda{|server| where(:server_id => server.id)} 
+  #scope :user_connections,          lambda{|user| where(:user => user)}
+  #scope :month_connections,         lambda{|month| where(:month => month)}
+  #scope :month_server_connections,  lambda{|month, server| where(["(server_id = ? AND month = ?)", server.id, month])}
  
+  def self.user_connections(server)
+
+    user_dates = Array.new 
+    users = Array.new
+
+    actual_connection = nil
+
+    server_connections(server).each do |connection|
+      if actual_connection
+        if actual_connection.start_time.month == connection.start_time.month &&
+           actual_connection.start_time.day == connection.start_time.day &&
+           actual_connection.start_time.year == connection.start_time.year
+
+          if !users.index(connection.user)
+            users.insert(-1,connection.user)
+            actual_connection = connection
+            user_dates.insert(-1, connection)
+          end
+
+        else
+          users.clear
+          users.insert(-1,connection.user)
+          user_dates.insert(-1, connection)
+          actual_connection = connection
+
+        end
+      else
+        actual_connection = connection
+        users.insert(-1,connection.user)
+        user_dates.insert(-1, connection)
+      end
+    end
+
+    user_dates
+
+  end
 
 end
