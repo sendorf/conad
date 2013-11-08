@@ -31,7 +31,7 @@ namespace :db do
       puts("Creating connections...")
 
       servers = Server.all
-      user_names = Array.new()
+      user_names = Array.new
       50.times do
         name = Faker::Name.first_name
         user_names.push(name)
@@ -44,14 +44,10 @@ namespace :db do
           user = user_names.sample
           start_time = DateTime.now - date.days
           end_time = start_time + hour.hours
-          create(:connection, :user => user, 
-                 :connection_last => (DateTime.jd(Rational(end_time - start_time)).strftime("%H:%m")), 
-                 :end_time => end_time, 
-                 :month => start_time.strftime("%b"), 
-                 :month_day => start_time.strftime("%-d"),
+          create(:connection, :user => user,  
+                 :end_time => end_time,
                  :server => server, 
-                 :start_time => start_time,  
-                 :week_day => start_time.strftime("%a"))
+                 :start_time => start_time)
         end
       end
 

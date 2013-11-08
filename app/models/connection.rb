@@ -26,10 +26,17 @@ class Connection < ActiveRecord::Base
            actual_connection.start_time.day == connection.start_time.day &&
            actual_connection.start_time.year == connection.start_time.year
 
+           puts users
+
           if !users.index(connection.user)
+            puts users.index(connection.user) 
             users.insert(-1,connection.user)
             actual_connection = connection
             user_dates.insert(-1, connection)
+
+          else
+            users.insert(-1,connection.user)
+            actual_connection = connection
           end
 
         else
