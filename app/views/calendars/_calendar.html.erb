@@ -45,7 +45,7 @@
       <%= date.day %>
       <% if @server && connections %>
         <ul>
-          <% connections.each do |connection| %>
+          <% connections.first(3).each do |connection| %>
             <li><%= connection.user %></li>
           <% end %>
           <% if connections.length >= 4 %>

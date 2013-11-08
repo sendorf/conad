@@ -8,7 +8,7 @@ class Connection < ActiveRecord::Base
 
   belongs_to :server
 
-  scope :server_connections,        lambda{|server| where(:server_id => server.id)} 
+  scope :server_connections,        lambda{|server| where(:server_id => server.id).order("start_time ASC")} 
   #scope :user_connections,          lambda{|user| where(:user => user)}
   #scope :month_connections,         lambda{|month| where(:month => month)}
   #scope :month_server_connections,  lambda{|month, server| where(["(server_id = ? AND month = ?)", server.id, month])}
@@ -26,17 +26,13 @@ class Connection < ActiveRecord::Base
            actual_connection.start_time.day == connection.start_time.day &&
            actual_connection.start_time.year == connection.start_time.year
 
-           puts users
-
-          if !users.index(connection.user)
-            puts users.index(connection.user) 
+          if users.index(connection.user) && users.index(connection.user) >= 0
+            users.insert(-1,connection.user)
+            actual_connection = connection
+          else 
             users.insert(-1,connection.user)
             actual_connection = connection
             user_dates.insert(-1, connection)
-
-          else
-            users.insert(-1,connection.user)
-            actual_connection = connection
           end
 
         else
@@ -47,6 +43,7 @@ class Connection < ActiveRecord::Base
 
         end
       else
+        puts "no hay actual_connection"
         actual_connection = connection
         users.insert(-1,connection.user)
         user_dates.insert(-1, connection)
