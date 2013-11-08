@@ -9,12 +9,14 @@
                 :icon => 'icon-plus',
                 :title => t('calendar_title.create_server'),
     %>
-    <%= link_to "<", {:month => (@date.beginning_of_month-1).strftime("%Y-%m-%d")},
+    <%= link_to "<i class='glyphicon glyphicon-arrow-left'></i>".html_safe, 
+                     {:month => (@date.beginning_of_month-1).strftime("%Y-%m-%d")},
                      {:title => t('calendar_title.previous_month'),
                       :class => 'col-md-offset-1' } %>
     <% trans_month = @date.strftime("%B")%>
     <%=h( t('month.'+@date.strftime("%B")) + ' ' + @date.strftime("%Y")) %>
-    <%= link_to ">",  {:month => (@date.end_of_month+1).strftime("%Y-%m-%d")}, 
+    <%= link_to "<i class='glyphicon glyphicon-arrow-right'></i>".html_safe,
+                      {:month => (@date.end_of_month+1).strftime("%Y-%m-%d")}, 
                       {:title => t('calendar_title.next_month')} %>
     <% if @server %>
       <%= link_to "<i class='glyphicon glyphicon-wrench white-icon'></i>

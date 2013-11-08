@@ -43,7 +43,6 @@ class Connection < ActiveRecord::Base
 
         end
       else
-        puts "no hay actual_connection"
         actual_connection = connection
         users.insert(-1,connection.user)
         user_dates.insert(-1, connection)
