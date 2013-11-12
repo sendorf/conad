@@ -25,10 +25,10 @@
 
     <%= link_to "<i class='glyphicon glyphicon-refresh white-icon'></i>
                 #{t('calendar_title.update_server')}".html_safe,
-                edit_server_path(@server),
+                update_connections_servers_path(@server),
                 :class => 'btn btn-info col-md-offset-3',
                 :type => 'button',
-                :title => t('calendar_title.edit_server')
+                :title => t('calendar_title.update_server')
     %>
 
     <%= link_to "<i class='glyphicon glyphicon-wrench white-icon'></i>

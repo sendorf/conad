@@ -57,7 +57,10 @@ Conad::Application.routes.draw do
   # match ':controller(/:action(/:id))(.:format)'
   resource :calendar, :only => :show 
 
-  resources :servers, only: [:edit, :new, :show, :create, :update]
+  resources :servers, only: [:edit, :new, :show, :create, :update] do
+    get ':id/update_connections', :on => :collection, :as => 'update_connections', 
+        :to => 'servers#update_connections' 
+  end
 
   root :to => 'calendars#show'
 

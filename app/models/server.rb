@@ -80,7 +80,7 @@ class Server < ActiveRecord::Base
       end
 
     end
-
+    true
   end
 
   def process_line(line)
