@@ -21,7 +21,7 @@ namespace :db do
     task :servers => "seed:prepare" do
       puts("Creating servers...")
 
-      local = create(:server, :name=> 'local', :url => 'localhost', :user => 'sendorf', :password => 'melkor86')
+      local = create(:server, :name=> 'Local', :url => 'localhost', :user => 'sendorf', :password => 'melkor86')
 
       10.times { create(:server) }
     end
