@@ -24,6 +24,7 @@ es:
   calendar_title:
     create_server: 'Nuevo Servidor'
     edit_server: 'Editar Servidor'
+    update_server: 'Actualizar Servidor'
     previous_month: 'Mes Anterior'
     next_month: 'Mes Siguiente'
   navbar:
@@ -46,3 +47,9 @@ es:
         password: 'Contraseña del usuario ssh'
     placeholders:
       defaults:
+  helpers:
+    actions:
+      could_not_create: "%{model} no se pudo crear."
+      could_not_update: "%{model} no se pudo actualizar."
+      successful_creation: "Creación de %{model} realizada con éxito."
+      successful_update: "Actualización de %{model} realizada con éxito."

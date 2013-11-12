@@ -58,6 +58,15 @@
     </div>
   </nav>
 
+  <div class="container">
+    <%- flash.each do |name, msg| -%>
+      <%= content_tag :div, :class => "alert alert-#{name}" do %>
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= msg.html_safe %>
+      <% end %>
+    <%- end -%>
+  </div>
+
 <%= yield %>
 
 </body>

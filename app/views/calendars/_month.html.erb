@@ -1,0 +1,24 @@
+  <h2 id="month">
+    
+    <%= link_to "<i class='glyphicon glyphicon-arrow-left'></i>".html_safe, 
+                     {:month => (@date.beginning_of_month-1).strftime("%Y-%m-%d")},
+                     {:title => t('calendar_title.previous_month') } %>
+
+    <% trans_month = @date.strftime("%B")%>
+    <%=h( t('month.'+@date.strftime("%B")) + ' ' + @date.strftime("%Y")) %>
+    
+    <%= link_to "<i class='glyphicon glyphicon-arrow-right'></i>".html_safe,
+                      {:month => (@date.end_of_month+1).strftime("%Y-%m-%d")}, 
+                      {:title => t('calendar_title.next_month')} %>
+
+  </h2>
+  <div class = "buttons">
+    <%= link_to "<i class='glyphicon glyphicon-plus white-icon'></i>
+                #{t('calendar_title.create_server')}".html_safe,
+                new_server_path,
+                :class => 'btn btn-success',
+                :type => 'button',
+                :icon => 'icon-plus',
+                :title => t('calendar_title.create_server'),
+    %>
+  </div>
