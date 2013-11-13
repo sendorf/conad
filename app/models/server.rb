@@ -25,19 +25,31 @@ class Server < ActiveRecord::Base
 
     stdout = ""
 
-    Net::SSH.start(self.url, self.user, :password => password) do |ssh|
+    begin
+      Net::SSH.start(self.url, self.user, :password => password) do |ssh|
 
-      # capture only stdout with 'last' command
-      ssh.exec!("last") do |channel, stream, data|
-        stdout << data if stream == :stdout
+        # capture only stdout with 'last' command
+        ssh.exec!("last") do |channel, stream, data|
+          stdout << data if stream == :stdout
+        end
+
       end
 
+      last_lines = stdout.split("\n")
+
+      if last_lines[0].split(" ")[3] == "denied"
+        false
+      else
+
+        #Creates the connections from the log obtained from 'last' command
+        isolate_connections(last_lines)
+
+      end
+    rescue Net::SSH::AuthenticationFailed
+      false
+    rescue Exception => e
+      false
     end
-
-    last_lines = stdout.split("\n")
-
-    #Creates the connections from the log obtained from 'last' command
-    isolate_connections(last_lines)
 
   end
 

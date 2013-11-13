@@ -34,7 +34,7 @@ class ServersController < ApplicationController
 			flash[:success] = successfully_updated_text Server
 			redirect_to @server
 		else
-			flash[:error] = could_not_updated_text Server
+			flash[:error] = could_not_update_text Server
 			redirect_to @server
 		end
 	end
@@ -50,7 +50,7 @@ class ServersController < ApplicationController
 			redirect_to @server
 
 		else
-			flash[:error] = could_not_updated_text Server
+			flash[:error] = could_not_update_text Server
 			redirect_to edit_server_path(@server)
 		end
 	end
