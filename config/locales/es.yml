@@ -1,5 +1,13 @@
 es:
   calendar: 'Calendario'
+  activerecord:
+    models:
+      server:
+        one: 'Servidor'
+        other: 'Servidores'
+      connection:
+        one: 'Conexión'
+        other: 'Conexiones'
   month:
     January: 'Enero'
     February: 'Febrero'
@@ -25,6 +33,7 @@ es:
     create_server: 'Nuevo Servidor'
     edit_server: 'Editar Servidor'
     update_server: 'Actualizar Servidor'
+    update_connections: 'Actualizar Conexiones'
     previous_month: 'Mes Anterior'
     next_month: 'Mes Siguiente'
   navbar:

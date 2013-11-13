@@ -1,7 +1,7 @@
 $(function(){
 
   // Hide alerts after a while
-  $(".alert").delay(500).fadeIn().delay(8000).fadeOut();
+  $(".alert").delay(500).fadeIn().delay(4000).fadeOut();
 
 
 });

@@ -17,10 +17,6 @@ module ActionText
     end
   end
 
-  def successfully_left_text(model_or_instance)
-    action_text :successful_leave, model_or_instance
-  end
-
   def successfully_created_text(model_or_instance)
     action_text :successful_creation, model_or_instance
   end
