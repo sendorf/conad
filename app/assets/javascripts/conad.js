@@ -3,7 +3,6 @@ $(function(){
   $('#calendar').on('click', "[data-link]", function(event) {
     event.stopPropagation();
     event.preventDefault();
-    alert("I am an alert box!");
     var href = $(this).data('link');
     window.location.href = href;
   });
