@@ -20,3 +20,4 @@
 #Ignore the database path
 /config/database.yml
 /config/alwaysdata_env.rb
+/Gemfile.lock
