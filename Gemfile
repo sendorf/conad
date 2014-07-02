@@ -14,7 +14,7 @@ gem 'faker' #needed in staging for db:seed
 gem 'factory_girl' # needed in staging for db:seed
 gem 'activerecord-postgresql-adapter'
 gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
-gem "watu_table_builder", :require => "table_builder", :git => "git@github.com:sendorf/table_builder.git"
+gem "watu_table_builder", :require => "table_builder", :git => "https://github.com/sendorf/table_builder.git"
 gem 'gon'
 gem 'backbone-on-rails'
 gem 'sass-rails',   '~> 3.2.3'
