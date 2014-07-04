@@ -1,5 +1,4 @@
 class Connection < ActiveRecord::Base
-  attr_accessible :end_time, :server_id, :start_time, :user
 
   validates_presence_of :user
   validates_presence_of :server_id

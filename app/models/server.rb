@@ -1,7 +1,5 @@
 class Server < ActiveRecord::Base
 
-  attr_accessible :description, :name, :password, :url, :user, :password_confirmation
-
   attr_accessor :password
 
   validates_presence_of :name
