@@ -1,11 +1,15 @@
+ruby '2.1.1'
+
 source 'https://rubygems.org'
 
+
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails', '4.1.1'
 gem 'execjs'
 gem 'rake'
 gem 'therubyracer'
-gem 'rails', '3.2.11'
 gem 'jquery-rails'
-gem 'simple_form', '~> 2.0.3'
+gem 'simple_form'
 gem 'country_select'
 gem 'rails-i18n' # , '~> 0.6.6'
 gem 'i18n-js'
@@ -15,11 +19,9 @@ gem 'factory_girl' # needed in staging for db:seed
 gem 'activerecord-postgresql-adapter'
 gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
 gem "watu_table_builder", :require => "table_builder", :git => "https://github.com/sendorf/table_builder.git"
-gem 'gon'
-gem 'backbone-on-rails'
-gem 'sass-rails',   '~> 3.2.3'
+gem 'sass-rails'   
 gem 'bootstrap-sass-rails'
-gem 'coffee-rails', '~> 3.2.1'
+gem 'coffee-rails'
 gem "aes", "~> 0.5.0", :require => 'aes'
 gem 'net-ssh', :require => 'net/ssh'
 
