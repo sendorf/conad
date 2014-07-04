@@ -1,9 +1,9 @@
-# Load the rails application
+# Load the Rails application.
 require File.expand_path('../application', __FILE__)
 
-# Load heroku vars from local file
-alwaysdata_env = File.join(Rails.root, 'config', 'alwaysdata_env.rb')
-load(alwaysdata_env) if File.exists?(alwaysdata_env)
+# Load alwaysdata vars from local file
+heroku_env = File.join(Rails.root, 'config', 'heroku_env.rb')
+load(heroku_env) if File.exists?(heroku_env)
 
-# Initialize the rails application
-Conad::Application.initialize!
+# Initialize the Rails application.
+Rails.application.initialize!
