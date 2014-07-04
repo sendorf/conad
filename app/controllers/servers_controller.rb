@@ -18,7 +18,7 @@ class ServersController < ApplicationController
 	end
 
 	def create
-		@server = Server.new(params[:server])
+		@server = Server.new(server_params)
 		if @server.save
 			redirect_to @server
 		else
@@ -45,7 +45,7 @@ class ServersController < ApplicationController
 
 		params[:server].delete(:password) if params[:server][:password].blank?
 
-		if @server.update_attributes(params[:server])
+		if @server.update_attributes(server_params)
 			flash[:success] = successfully_updated_text Server
 			redirect_to @server
 
@@ -55,6 +55,10 @@ class ServersController < ApplicationController
 		end
 	end
 
-
+	private 
+		
+		def server_params
+			params.require(:server).permit(:name, :description, :url, :user, :id, :password)
+		end
 
 end

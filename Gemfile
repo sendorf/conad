@@ -17,7 +17,7 @@ gem 'database_cleaner', '~> 0.8.0'
 gem 'faker' #needed in staging for db:seed
 gem 'factory_girl' # needed in staging for db:seed
 gem 'activerecord-postgresql-adapter'
-gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
+gem 'jquery-datatables-rails', git: 'https://github.com/rweng/jquery-datatables-rails.git'
 gem "watu_table_builder", :require => "table_builder", :git => "https://github.com/sendorf/table_builder.git"
 gem 'sass-rails'   
 gem 'bootstrap-sass-rails'

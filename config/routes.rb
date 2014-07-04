@@ -53,4 +53,14 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  resource :calendar, only: [:show]
+
+  resources :servers, only: [:new, :create, :edit, :show, :update] do
+    member do
+      get 'update_connections'
+    end
+  end
+
+  root :to => "calendars#show"
 end

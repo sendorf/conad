@@ -32,6 +32,11 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
+  # Precompile Javascript
+  config.assets.precompile += %w( jQuery.js )
+  config.assets.precompile += %w( rails.js )
+  config.assets.precompile += %w( application.js )
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
