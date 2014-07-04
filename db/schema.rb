@@ -9,31 +9,31 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130809111249) do
+ActiveRecord::Schema.define(version: 20131029095410) do
 
-  create_table "connections", :force => true do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "connections", force: true do |t|
     t.string   "user"
-    t.string   "week_day"
-    t.string   "month_day"
-    t.string   "month"
-    t.string   "connection_last"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer  "server_id"
   end
 
-  create_table "servers", :force => true do |t|
+  create_table "servers", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.string   "url"
     t.string   "user"
-    t.string   "password"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.string   "hash1"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "hash2"
   end
 
 end
