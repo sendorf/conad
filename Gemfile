@@ -20,7 +20,7 @@ gem 'activerecord-postgresql-adapter'
 gem 'jquery-datatables-rails', git: 'https://github.com/rweng/jquery-datatables-rails.git'
 gem "watu_table_builder", :require => "table_builder", :git => "https://github.com/sendorf/table_builder.git"
 gem 'sass-rails'   
-gem 'bootstrap-sass-rails'
+gem 'bootstrap-sass'
 gem 'coffee-rails'
 gem "aes", "~> 0.5.0", :require => 'aes'
 gem 'net-ssh', :require => 'net/ssh'
