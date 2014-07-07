@@ -56,6 +56,8 @@ Rails.application.routes.draw do
 
   resource :calendar, only: [:show]
 
+  resources :charts, only: [:index]
+
   resources :servers, only: [:new, :create, :edit, :show, :update] do
     member do
       get 'update_connections'
