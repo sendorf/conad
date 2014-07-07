@@ -20,3 +20,6 @@
 # Ignore the db/configuration files
 /config/heroku_env.rb
 /config/database.yml
+
+#Ignore assets
+/public/javascripts
