@@ -30,6 +30,7 @@ es:
     Saturday: 'Sábado'
     Sunday: 'Domingo'
   calendar_title:
+    go_to_charts: 'Ir a Gráficas'
     create_server: 'Nuevo Servidor'
     edit_server: 'Editar Servidor'
     update_server: 'Actualizar Servidor'
