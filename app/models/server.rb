@@ -103,28 +103,25 @@ class Server < ActiveRecord::Base
          "still" == line_array[7].to_s
         nil
       else
-        if line_array[1].to_s == "pts/0"
 
-          string_start_time = line_array[4] + ' ' + line_array[5] + ' ' + 
-                              line_array[6]
+        string_start_time = line_array[4] + ' ' + line_array[5] + ' ' + 
+                            line_array[6]
 
-          start_time = DateTime.parse string_start_time
+        start_time = DateTime.parse string_start_time
 
-          if line_array[8].to_s == "crash" || line_array[8].to_s == "down"
-            duration_array = line_array[9].split(":")
-            end_time = start_time + duration_array[0].split("(")[1].to_i.hour + duration_array[1].to_i.minutes
-          else
-            string_end_time = line_array[4] + ' ' + line_array[5] + ' ' + 
-                              line_array[8]
+        if line_array[8].to_s == "crash" || line_array[8].to_s == "down"
+          duration_array = line_array[9].split(":")
+          end_time = start_time + duration_array[0].split("(")[1].to_i.hour + duration_array[1].to_i.minutes
+        else
+          string_end_time = line_array[4] + ' ' + line_array[5] + ' ' + 
+                            line_array[8]
 
-            end_time = DateTime.parse string_end_time
-          end
+          end_time = DateTime.parse string_end_time
+        end
 
+        if (end_time != start_time)
           Connection.new(:server_id => self.id, :user => line_array[0], 
                          :start_time => start_time, :end_time=> end_time)
-
-        else
-          nil
         end
       end
     end
