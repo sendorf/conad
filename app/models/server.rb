@@ -13,18 +13,35 @@ class Server < ActiveRecord::Base
   has_many :connections
 
   def password=(new_password)
-    begin
-      #Reads the file where the key is stored
-      key_file = File.join(Rails.root, 'config', 'private_key.aes')
-      file = File.open(key_file, 'r')
-      key = file.gets
-      file.close # Closes the file
-      @password = AES.encrypt(new_password, key) # Encrypts the password using the secret key
-      self.password_hash = @password #Stores the hash of the password after being encrypted
-    rescue => err
-      puts "Exception: #{err}"
-      err
+    key_file = File.join(Rails.root, 'config', 'private_key.aes') #File where the private key is going to be estored.
+    if File.exist?(key_file)
+      begin
+        #Reads the file where the key is stored
+        file = File.open(key_file, 'r')
+        key = file.gets
+        file.close # Closes the file
+        @password = AES.encrypt(new_password, key) # Encrypts the password using the secret key
+        self.password_hash = @password #Stores the hash of the password after being encrypted
+      rescue => err
+        puts "Exception: #{err}"
+        err
+      end
+    else
+      begin
+        #Creates the key
+        key = AES.key
+        # Writes in the file
+        File.open(key_file, 'w+') do |file|
+          file.write key
+        end
+        @password = AES.encrypt(new_password, key) # Encrypts the password using the secret key
+        self.password_hash = @password #Stores the hash of the password after being encrypted
+      rescue => err
+        puts "Exception: #{err}"
+        err
+      end
     end
+    
   end
 
   def update_connections
