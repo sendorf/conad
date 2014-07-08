@@ -23,3 +23,6 @@
 
 #Ignore assets
 /public/javascripts
+
+#Ignore key_file
+/config/private_key.aes
