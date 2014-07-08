@@ -13,10 +13,18 @@ class Server < ActiveRecord::Base
   has_many :connections
 
   def password=(new_password)
-    @key = AES.key
-    @password = AES.encrypt(new_password, @key)
-    self.hash1 = @password
-    self.hash2 = @key
+    begin
+      #Reads the file where the key is stored
+      key_file = File.join(Rails.root, 'config', 'private_key.aes')
+      file = File.open(key_file, 'r')
+      key = file.gets
+      file.close # Closes the file
+      @password = AES.encrypt(new_password, key) # Encrypts the password using the secret key
+      self.password_hash = @password #Stores the hash of the password after being encrypted
+    rescue => err
+      puts "Exception: #{err}"
+      err
+    end
   end
 
   def update_connections
@@ -54,7 +62,16 @@ class Server < ActiveRecord::Base
   private 
 
   def password
-    AES.decrypt(self.hash1, self.hash2)
+    begin
+      key_file = File.join(Rails.root, 'config', 'private_key.aes')
+      file = File.open(key_file, 'r')
+      key = file.gets
+      file.close
+      AES.decrypt(self.password_hash, key)
+    rescue => err
+      puts "Exception: #{err}"
+      err
+    end
   end
 
   def isolate_connections(last_lines)
@@ -99,26 +116,31 @@ class Server < ActiveRecord::Base
     else
       line_array = line.split
 
+      # Rejects all not completed connections to the server
       if "(unknown" == line_array[0].to_s || line_array[0].to_s == "reboot" || line_array[0].to_s == "wtmp" ||
          "still" == line_array[7].to_s
         nil
       else
-
+        # Extracts the time from the 'last' command
         string_start_time = line_array[4] + ' ' + line_array[5] + ' ' + 
                             line_array[6]
 
+        # Parses the date to DateTime 
         start_time = DateTime.parse string_start_time
 
+        # Calculates the end_time from the duration if the connection has not finished in a correct way
         if line_array[8].to_s == "crash" || line_array[8].to_s == "down"
           duration_array = line_array[9].split(":")
           end_time = start_time + duration_array[0].split("(")[1].to_i.hour + duration_array[1].to_i.minutes
+        # Else it extract it as the start_time
         else
           string_end_time = line_array[4] + ' ' + line_array[5] + ' ' + 
                             line_array[8]
-
+          # Parses the date to DateTime
           end_time = DateTime.parse string_end_time
         end
 
+        # Rejects connections that last 00:00
         if (end_time != start_time)
           Connection.new(:server_id => self.id, :user => line_array[0], 
                          :start_time => start_time, :end_time=> end_time)
