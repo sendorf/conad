@@ -26,3 +26,6 @@
 
 #Ignore key_file
 /config/private_key.aes
+
+# Ignored readable d3.js
+/app/assets/javascripts/d3.js
