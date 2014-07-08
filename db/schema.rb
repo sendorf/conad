@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20140708084608) do
     t.text     "description"
     t.string   "url"
     t.string   "user"
-    t.string   "pasword_hash"
+    t.string   "password_hash"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
