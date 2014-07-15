@@ -24,25 +24,16 @@ $darkorange: #fa7b17;
 $darkred: #BD362F;
 $radius: 3px;
 
-// General styles
+// Chart styles
 
 .chart rect {
   fill: steelblue;
 }
 
 .chart text {
-  fill: white;
+  fill: black;
   font: 10px sans-serif;
   text-anchor: end;
-}
-
-.chart div {
-  font: 10px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
 }
 
 .bar {
@@ -63,6 +54,9 @@ $radius: 3px;
 .x.axis path {
   display: none;
 }
+
+
+// General styles
 
 #calendar table {
   border-collapse: collapse;

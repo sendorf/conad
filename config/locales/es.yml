@@ -1,4 +1,5 @@
 es:
+  charts: 'Gráficas'
   calendar: 'Calendario'
   activerecord:
     models:
