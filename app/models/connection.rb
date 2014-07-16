@@ -10,8 +10,28 @@ class Connection < ActiveRecord::Base
   scope :server_connections,        lambda{|server| where(:server_id => server.id).order("start_time ASC")} 
   #scope :user_connections,          lambda{|user| where(:user => user)}
   #scope :month_connections,         lambda{|month| where(:month => month)}
-  #scope :month_server_connections,  lambda{|month, server| where(["(server_id = ? AND month = ?)", server.id, month])}
- 
+  scope :month_server_connections,  lambda{|month, server| select('start_time, server_id')
+                                                          .where(["(server_id = ? AND extract(month from start_time) = ?)", server.id, month])
+                                                          .order("start_time ASC")}
+
+
+  def self.month_and_server_chart_data(month, server)
+    day = 1
+    count = 0
+    result = []
+    month_server_connections(month, server).each do |connection|
+      if connection.start_time.day == day
+        count += 1
+      else
+        result << {day: day, connections: count}
+        day = connection.start_time.day
+        count = 0
+      end
+    end
+    result << {day: day, connections: count}
+    return result
+  end
+
   def self.user_connections(server)
 
     user_dates = Array.new 

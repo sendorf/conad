@@ -1,3 +1,5 @@
 <% title t('charts'), :show_title => false %>
 
-<svg class="chart col-md-offset-1"></svg>
+<%= content_tag :svg, class: "chart col-md-offset-1", 
+                      data: {chart: Connection.month_and_server_chart_data(6, @server)} do %>
+<% end %>
