@@ -1,3 +1,7 @@
 <% title t('calendar'), :show_title => false %>
 
+<%= content_tag :svg, class: "lines-chart col-md-offset-1", 
+                      data: {lines: Connection.chart_format_period_connections(@start_date, @end_date)} do %>
+<% end %>
+
 <%= render 'calendar' %>

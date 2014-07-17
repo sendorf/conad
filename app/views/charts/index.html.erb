@@ -4,6 +4,6 @@
                       data: {chart: Connection.month_and_server_chart_data(6, @server)} do %>
 <% end %>
 
-<%= content_tag :svg, class: "chart-lines col-md-offset-1", 
-                      data: {chart: Connection.chart_format_period_connections(@start_date, @end_date)} do %>
+<%= content_tag :svg, class: "lines-chart col-md-offset-1", 
+                      data: {lines: Connection.chart_format_period_connections(@start_date, @end_date)} do %>
 <% end %>
