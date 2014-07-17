@@ -55,6 +55,19 @@ $radius: 3px;
   display: none;
 }
 
+.chart-lines {
+  font: 10px sans-serif;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
 
 // General styles
 
