@@ -56,13 +56,13 @@ Rails.application.routes.draw do
 
   resource :calendar, only: [:show]
 
+  resource :connection, only: [] do
+    get :update_connections
+  end
+
   resources :charts, only: [:index]
 
-  resources :servers, only: [:new, :create, :edit, :show, :update] do
-    member do
-      get 'update_connections'
-    end
-  end
+  resources :servers, only: [:new, :create, :edit, :show, :update]
 
   root :to => "calendars#show"
 end

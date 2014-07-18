@@ -26,19 +26,6 @@ class ServersController < ApplicationController
 		end
 	end
 
-	def update_connections
-
-		@server = Server.find(params[:id])
-		
-		if @server.update_connections
-			flash[:success] = successfully_updated_text Connection
-			redirect_to @server
-		else
-			flash[:danger] = could_not_update_text Connection
-			redirect_to @server
-		end
-	end
-
 	def update
 
 		@server = Server.find(params[:id])

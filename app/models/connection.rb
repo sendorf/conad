@@ -7,13 +7,13 @@ class Connection < ActiveRecord::Base
 
   belongs_to :server
 
-  scope :server_connections,        lambda{|server| where(:server_id => server.id).order("start_time ASC")} 
-  #scope :user_connections,          lambda{|user| where(:user => user)}
-  #scope :month_connections,         lambda{|month| where(:month => month)}
-  scope :month_server_connections,  lambda{|month, server| select('start_time, server_id')
+  scope :server_connections,          lambda{|server| where(:server_id => server.id).order("start_time ASC")} 
+  #scope :month_connections,          lambda{|month| where(:month => month)}
+  scope :last_connection_for_server,  lambda{|server| where(:server_id => server.id).order("start_time DESC").limit(1)}
+  scope :month_server_connections,    lambda{|month, server| select('start_time, server_id')
                                                           .where(["(server_id = ? AND extract(month from start_time) = ?)", server.id, month])
                                                           .order("start_time ASC")}
-  scope :period_connections, lambda{|start_date, end_date| where(["(start_time >= ? AND start_time <= ?)", start_date, end_date])
+  scope :period_connections,          lambda{|start_date, end_date| where(["(start_time >= ? AND start_time <= ?)", start_date, end_date])
                                                           .order("start_time ASC")}
 
 
@@ -64,6 +64,14 @@ class Connection < ActiveRecord::Base
     end
     result << {day: day, connections: count}
     return result
+  end
+
+  def self.users
+    users = []
+    Connection.select(:user).uniq.each do |connection|
+      users << connection.user
+    end
+    return users
   end
 
   def self.user_connections(server)
