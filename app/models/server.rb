@@ -79,21 +79,22 @@ class Server < ActiveRecord::Base
       if !result
         user_names = Connection.users
         last_date = Connection.last_connection_for_server(server).first.start_time
-        days = (DateTime.now.to_date - last_date.to_date).to_i
-        puts days
-        days.times do |i|
-          rand(40).times do
-            date = last_date + i.days
-            hour = rand(8)
-            user = user_names.sample
-            start_time = date
-            end_time = date + hour.hours
-            connection = Connection.new(:server_id => server.id, :user => user, 
-                         :start_time => start_time, :end_time=> end_time)
-            puts connection
-            result = connection.save
+        if last_date.to_date != DateTime.yesterday.to_date
+          days = (DateTime.yesterday.to_date - last_date.to_date).to_i
+          days.times do |i|
+            rand(25).times do
+              date = last_date + i.days
+              hour = rand(8)
+              user = user_names.sample
+              start_time = date
+              end_time = date + hour.hours
+              connection = Connection.new(:server_id => server.id, :user => user, 
+                           :start_time => start_time, :end_time=> end_time)
+              result = connection.save
+            end
           end
         end
+        result = true
       end
     end
     return result;
