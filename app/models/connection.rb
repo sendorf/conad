@@ -22,7 +22,7 @@ class Connection < ActiveRecord::Base
 
   def self.chart_format_period_connections(start_date, end_date)
     result = []
-    (end_date - start_date).to_i.times do |days|
+    ((end_date - start_date) + 1).to_i.times do |days|
       date = start_date + days.days
       date_hash = {date: date.strftime('%Y%m%d')}
       Server.all.each do |server|
