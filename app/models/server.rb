@@ -65,7 +65,6 @@ class Server < ActiveRecord::Base
           puts 'Joder'
           result = false
         else
-
           #Creates the connections from the log obtained from 'last' command
           isolate_connections(last_lines)
           result = true
@@ -76,22 +75,36 @@ class Server < ActiveRecord::Base
       rescue Exception => e
         result = false
       end
+      # This generates false data to make experiments
       if !result
         user_names = Connection.users
-        last_date = Connection.last_connection_for_server(server).first.start_time
-        if last_date.to_date != DateTime.yesterday.to_date
-          days = (DateTime.yesterday.to_date - last_date.to_date).to_i
-          days.times do |i|
-            rand(25).times do
-              date = last_date + i.days
-              hour = rand(8)
-              user = user_names.sample
-              start_time = date
-              end_time = date + hour.hours
-              connection = Connection.new(:server_id => server.id, :user => user, 
-                           :start_time => start_time, :end_time=> end_time)
-              result = connection.save
+        if last_date = Connection.last_connection_for_server(server).first
+          last_date = last_date.start_time
+          days = (DateTime.now.to_date - last_date.to_date).to_i
+          (days + 1).times do |i|
+            date = last_date + i.days
+            if Connection.server_date_connections(server, date).length == 0
+              rand(25).times do
+                date = last_date + i.days
+                hour = rand(8)
+                user = user_names.sample
+                start_time = date
+                end_time = date + hour.hours
+                connection = Connection.new(:server_id => server.id, :user => user, 
+                             :start_time => start_time, :end_time=> end_time)
+                result = connection.save
+              end
             end
+          end
+        else
+          rand(25).times do
+            hour = rand(8)
+            user = user_names.sample
+            start_time = DateTime.now
+            end_time = start_time + hour.hours
+            connection = Connection.new(:server_id => server.id, :user => user, 
+                         :start_time => start_time, :end_time=> end_time)
+            result = connection.save
           end
         end
         result = true
