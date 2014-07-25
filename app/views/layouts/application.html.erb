@@ -23,7 +23,8 @@
         <a class="navbar-brand" href="/">CONAD</a>
         <ul class="nav centered-nav navbar-nav">
           <li class="nav centered-li">
-            <%= link_to t('home.update_connections') , update_connections_connection_path  %>
+            <%= link_to "<i class='glyphicon glyphicon-refresh white-icon'></i>
+                #{t('home.update_connections')}".html_safe , update_connections_connection_path  %>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right ">

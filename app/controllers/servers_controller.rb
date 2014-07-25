@@ -11,13 +11,6 @@ class ServersController < ApplicationController
 		@edit = true
 	end
 
-	def show
-		@servers = Server.all.sort
-		@server = Server.find(params[:id])
-		@date = params[:month] ? DateTime.parse(params[:month],"%Y-%m-%d") : DateTime.now
-	  @connections = Connection.user_connections(@server)
-	end
-
 	def create
 		@server = Server.new(server_params)
 		if @server.save
