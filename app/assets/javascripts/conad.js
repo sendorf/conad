@@ -182,7 +182,7 @@ $(function(){
 $(function(){
 
 
-  var data = $('.lines-chart').data('lines')
+  var data = $('.lines-chart').data('chart')
 
   if(data){
 
