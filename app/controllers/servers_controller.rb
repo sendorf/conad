@@ -20,7 +20,7 @@ class ServersController < ApplicationController
 	def create
 		@server = Server.new(server_params)
 		if @server.save
-			redirect_to @server
+			redirect_to root_path
 		else
 			redirect_to new_server_path(@server)
 		end
@@ -34,7 +34,7 @@ class ServersController < ApplicationController
 
 		if @server.update_attributes(server_params)
 			flash[:success] = successfully_updated_text Server
-			redirect_to @server
+			redirect_to root_path
 
 		else
 			flash[:danger] = could_not_update_text Server

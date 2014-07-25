@@ -34,17 +34,15 @@
               <b class="caret"></b></a>
             <ul class="dropdown-menu" id= "servers">
               <% @servers.each do |server| %>
-                <%if server != @servers.last %>
-                  <li>
-                    <%= link_to server.name , server_path(server)  %>
-                  </li>
-                  <li class="divider"></li>
-                <% else %>
-                  <li>
-                    <%= link_to server.name , server_path(server)  %>
-                  </li>
-                <%end%>
+                <li>
+                  <%= link_to server.name , edit_server_path(server)  %>
+                </li>
+                <li class="divider"></li>
               <% end %>
+              <li>
+                <%= link_to "<i class='glyphicon glyphicon-plus white-icon'></i>
+                #{t('calendar_title.create_server')}".html_safe , new_server_path %>
+              </li>
             </ul>
           </li>
         </ul>
