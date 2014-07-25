@@ -76,12 +76,12 @@ $(function(){
 
   if(data){
 
-    var margin = {top: 20, right: 20, bottom: 30, left: 40},
-                 width = 960 - margin.left - margin.right,
+    var margin = {top: 20, right: 20, bottom: 50, left: 40},
+                 width = 1122 - margin.left - margin.right,
                  height = 500 - margin.top - margin.bottom;
 
     var x = d3.scale.ordinal()
-        .rangeRoundBands([0, width], .1);
+        .rangeRoundBands([10, (width - 120)], .1);
 
     var y = d3.scale.linear()
         .rangeRound([height, 0]);
@@ -92,7 +92,8 @@ $(function(){
 
     var xAxis = d3.svg.axis()
         .scale(x)
-        .orient("bottom");
+        .orient("bottom")
+        .tickFormat(d3.time.format("%a %d"));
 
     var yAxis = d3.svg.axis()
         .scale(y)
@@ -117,15 +118,20 @@ $(function(){
       d.total = d.servers[d.servers.length - 1].y1;
     });
 
-    data.sort(function(a, b) { return b.total - a.total; });
-
     x.domain(data.map(function(d) { return d.date; }));
     y.domain([0, d3.max(data, function(d) { return d.total; })]);
 
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
+        .call(xAxis)
+      .selectAll("text")  
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", function(d) {
+                return "rotate(-65)" 
+                });
 
     svg.append("g")
         .attr("class", "y axis")
