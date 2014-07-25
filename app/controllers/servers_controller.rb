@@ -8,6 +8,7 @@ class ServersController < ApplicationController
 	def edit
 		@server = Server.find(params[:id])
 		@servers = Server.all.sort
+		@edit = true
 	end
 
 	def show
@@ -20,8 +21,10 @@ class ServersController < ApplicationController
 	def create
 		@server = Server.new(server_params)
 		if @server.save
+			flash[:success] = successfully_created_text Server
 			redirect_to root_path
 		else
+			flash[:danger] = could_not_create_text Server
 			redirect_to new_server_path(@server)
 		end
 	end
@@ -38,6 +41,18 @@ class ServersController < ApplicationController
 
 		else
 			flash[:danger] = could_not_update_text Server
+			redirect_to edit_server_path(@server)
+		end
+	end
+
+	def destroy
+		@server = Server.find(params[:id])
+
+		if (Connection.server_connections(@server).delete_all) &&  (@server.destroy)
+			flash[:success] = successfully_deleted_text Server
+			redirect_to root_path
+		else
+			flash[:danger] = could_not_delete_text Server
 			redirect_to edit_server_path(@server)
 		end
 	end

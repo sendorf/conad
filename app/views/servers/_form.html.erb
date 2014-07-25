@@ -21,7 +21,16 @@
               :hint_html => { :class => 'col-md-offset-1' }%>
 
   <%= f.input :description, as: :text, :label_html => { :class => 'col-md-offset-1' }, 
-  						:input_html => {:class => 'col-md-offset-1', :cols => 48, :rows =>3}%>
+  						:input_html => {:class => 'col-md-offset-1', :cols => 50, :rows =>3}%>
 <br>
-  <%= f.button :submit, :class => 'col-md-offset-1 btn btn-warning' %>
+  <%= f.button :submit, :class => 'col-md-offset-1 btn btn-warning' %> 
+
+  <% if @edit %>
+    <%= link_to "<i class='glyphicon glyphicon-trash white-icon'></i> #{t('server.delete')}".html_safe,
+                server_path(@server),
+                :class => 'col-md-offset-1 btn btn-danger',
+                :type => 'submit',
+                :method => :delete
+    %>
+  <% end %>
 <% end %>

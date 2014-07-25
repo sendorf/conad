@@ -46,6 +46,7 @@ es:
     calendar: 'Calendario del Servidor %{server}'
     new: 'Nuevo Servidor'
     edit: 'Editar Servidor %{server}'
+    delete: 'Eliminar Servidor'
   simple_form:
     labels:
       defaults:
@@ -64,5 +65,7 @@ es:
     actions:
       could_not_create: "%{model} no se pudo crear."
       could_not_update: "%{model} no se pudo actualizar."
+      could_not_delete: "%{model} no se pudo eliminar."
       successful_creation: "Creación de %{model} realizada con éxito."
       successful_update: "Actualización de %{model} realizada con éxito."
+      successful_deletion: "Eliminación de %{model} realizada con éxito."

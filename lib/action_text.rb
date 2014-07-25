@@ -25,12 +25,20 @@ module ActionText
     action_text :successful_update, model_or_instance
   end
 
+  def successfully_deleted_text(model_or_instance)
+    action_text :successful_deletion, model_or_instance
+  end
+
   def could_not_create_text(model_or_instance)
     action_text :could_not_create, model_or_instance
   end
 
   def could_not_update_text(model_or_instance)
     action_text :could_not_update, model_or_instance
+  end
+
+  def could_not_delete_text(model_or_instance)
+    action_text :could_not_delete, model_or_instance
   end
 
 end
