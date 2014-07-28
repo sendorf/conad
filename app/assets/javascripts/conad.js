@@ -371,59 +371,58 @@ $(function(){
 
 
   function lines() {
+
+
     x = d3.time.scale().range([0, w - 60]);
-    y = d3.scale.linear().range([h / servers.length - 20, 0]);
+    y = d3.scale.linear().range([h , 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+
 
     // Compute the minimum and maximum date across servers.
-    x.domain([
-      d3.min(servers, function(d) { return d.values[0].date; }),
-      d3.max(servers, function(d) { return d.values[d.values.length - 1].date; })
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+
+    y.domain([
+      d3.min(servers, function(c) { return d3.min(c.values, function(v) { return v.connections; }); }),
+      d3.max(servers, function(c) { return d3.max(c.values, function(v) { return v.connections; }); })
     ]);
 
-    var g = svg.selectAll(".server")
-        .attr("transform", function(d, i) { return "translate(0," + (i * h / servers.length + 10) + ")"; });
+    g.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + h + ")")
+          .call(xAxis);
 
-    g.each(function(d) {
-      var e = d3.select(this);
+    g.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Connections");
 
-      e.append("path")
-          .attr("class", "line");
+    var server = svg.selectAll(".server")
 
-      e.append("circle")
-          .attr("r", 5)
-          .style("fill", function(d) { return color(d.key); })
-          .style("stroke", "#000")
-          .style("stroke-width", "2px");
+    server.append("path")
+        .attr("class", "line")
+        .attr("d", function(d) { return line(d.values); })
+        .style("stroke", function(d) { return color(d.name); });
 
-      e.append("text")
-          .attr("x", 12)
-          .attr("dy", ".31em")
-          .text(d.key);
-    });
+    server.append("text")
+        .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+        .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.connections) + ")"; })
+        .attr("x", 3)
+        .attr("dy", ".35em")
+        .text(function(d) { return d.name; });
 
-    function draw(k) {
-      g.each(function(d) {
-        var e = d3.select(this);
-        y.domain([0, d.maxConnections]);
-
-        e.select("path")
-            .attr("d", function(d) { return line(d.values.slice(0, k + 1)); });
-
-        e.selectAll("circle, text")
-            .data(function(d) { return [d.values[k], d.values[k]]; })
-            .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.connections) + ")"; });
-      });
-    }
-
-    var k = 1, n = servers[0].values.length;
-    d3.timer(function() {
-      draw(k);
-      if ((k += 2) >= n - 1) {
-        draw(n - 1);
-        setTimeout(horizons, 500);
-        return true;
-      }
-    });
+    //setTimeout(horizons, duration + delay);
   }
 
   function horizons() {
