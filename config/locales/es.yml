@@ -1,6 +1,7 @@
 es:
   home:
     update_connections: 'Actualizar Conexiones'
+    button: 'Botón'
   charts: 'Gráficas'
   calendar: 'Calendario'
   activerecord:
