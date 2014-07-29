@@ -101,7 +101,7 @@ $(function(){
 
     var parseDate = d3.time.format("%Y%m%d").parse;
 
-    var color = d3.scale.category20b();
+    var color = d3.scale.category20();
 
     var xAxis = d3.svg.axis()
         .scale(x)
@@ -211,7 +211,7 @@ $(function(){
     var y = d3.scale.linear()
         .range([height, 0]);
 
-    var color = d3.scale.category20b();
+    var color = d3.scale.category20();
 
     var xAxis = d3.svg.axis()
         .scale(x)
@@ -303,10 +303,10 @@ $(function(){
 
     var x,
         y,
-        duration = 1500,
+        duration = 120000,
         delay = 500;
 
-    var color = d3.scale.category20b();
+    var color = d3.scale.category20();
 
     var svg = d3.select(".transition")
         .attr("width", w + m[1] + m[3])
@@ -369,12 +369,10 @@ $(function(){
       .enter().append("g")
         .attr("class", "server");
 
-    setTimeout(lines, duration);
+    lines();
 
 
     function lines() {
-
-      svg.selectAll("g").data(servers).enter().append("g").attr("class", "server");
 
       servers = server_keys.map(function(name) {
         return {
@@ -413,6 +411,11 @@ $(function(){
         d3.max(servers, function(c) { return d3.max(c.values, function(v) { return v.connections; }); })
       ]);
 
+      g = svg.selectAll("g")
+          .data(servers)
+        .enter().append("g")
+          .attr("class", "server");
+
       g.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + h + ")")
@@ -444,6 +447,7 @@ $(function(){
 
       setTimeout(function() {
         svg.selectAll(".server").remove();
+        svg.selectAll(".g").remove()
         stackedBar();
       }, duration + delay);
     }
@@ -807,9 +811,8 @@ $(function(){
 
 
       setTimeout(function() {
-        svg.selectAll(".g").remove();
+        svg.selectAll("g").remove();
         svg.selectAll(".legend").remove();
-        svg.selectAll(".g").data(servers).enter().append("g").attr("class", "server");
         lines();
       }, duration + delay);
     }
