@@ -303,7 +303,7 @@ $(function(){
 
     var x,
         y,
-        duration = 120000,
+        duration = 30000,
         delay = 500;
 
     var color = d3.scale.category20();
@@ -373,6 +373,9 @@ $(function(){
 
 
     function lines() {
+
+      svg.selectAll("g").remove();
+      svg.selectAll(".legend").remove();
 
       servers = server_keys.map(function(name) {
         return {
@@ -446,8 +449,6 @@ $(function(){
           .text(function(d) { return d.name; });
 
       setTimeout(function() {
-        svg.selectAll(".server").remove();
-        svg.selectAll(".g").remove()
         stackedBar();
       }, duration + delay);
     }
@@ -725,6 +726,9 @@ $(function(){
 
     function stackedBar() {
 
+      svg.selectAll(".server").remove();
+      svg.selectAll(".g").remove()
+
       x = d3.scale.ordinal()
           .rangeRoundBands([10, (w - 120)], .1);
 
@@ -811,8 +815,6 @@ $(function(){
 
 
       setTimeout(function() {
-        svg.selectAll("g").remove();
-        svg.selectAll(".legend").remove();
         lines();
       }, duration + delay);
     }
