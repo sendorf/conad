@@ -291,6 +291,86 @@ $(function(){
 
 $(function(){
 
+
+  var data = $('.donut').data('chart')
+
+  if(data){
+
+    var w = 1122,
+        h = 500,
+        radius = Math.min(w, h) / 2;
+
+    var color = d3.scale.category20();
+
+    var arc = d3.svg.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(radius - 100);
+
+    var pie = d3.layout.pie()
+        .sort(null)
+        .value(function(d) { return d.connections; });
+
+    var svg = d3.select(".donut")
+        .attr("width", w)
+        .attr("height", h)
+      .append("g")
+        .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
+
+      color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+
+      var servers = color.domain().map(function(name) {
+        total = 0;
+        data.map(function(d) {
+            return +d[name];
+        }).forEach(function(c) { 
+            total += c;
+        })
+        return {
+          server: name,
+          connections: total
+        };
+      });
+
+      /*servers.forEach(function(d){
+          total = 0;
+          connections: d.connections.forEach(function(c) { 
+            total += c;
+          })
+          return {connections: total}
+      });*/
+
+      /*servers.forEach(function(d){
+        document.write(d.server +": "+d.connections+". ")
+      });
+
+
+      var totals = d3.nest()
+      .key(function(d) { return d.server;})
+      .rollup(function(d) { 
+       return d3.sum(d, function(g) {return g.connections; });
+      }).entries(servers);*/
+
+      var g = svg.selectAll(".arc")
+          .data(pie(servers))
+        .enter().append("g")
+          .attr("class", "arc");
+
+      g.append("path")
+          .attr("d", arc)
+          .style("fill", function(d) { return color(d.data.server); });
+
+      g.append("text")
+          .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+          .attr("dy", ".35em")
+          .style("text-anchor", "middle")
+          .text(function(d) { return d.data.server; });
+
+  }
+});
+
+
+$(function(){
+
   var data = $('.transition').data('chart')
 
   if(data){
@@ -374,8 +454,7 @@ $(function(){
 
     function lines() {
 
-      svg.selectAll("g").remove();
-      svg.selectAll(".legend").remove();
+      svg.selectAll("*").remove();
 
       servers = server_keys.map(function(name) {
         return {
