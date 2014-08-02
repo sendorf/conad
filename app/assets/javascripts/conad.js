@@ -331,25 +331,6 @@ $(function(){
         };
       });
 
-      /*servers.forEach(function(d){
-          total = 0;
-          connections: d.connections.forEach(function(c) { 
-            total += c;
-          })
-          return {connections: total}
-      });*/
-
-      /*servers.forEach(function(d){
-        document.write(d.server +": "+d.connections+". ")
-      });
-
-
-      var totals = d3.nest()
-      .key(function(d) { return d.server;})
-      .rollup(function(d) { 
-       return d3.sum(d, function(g) {return g.connections; });
-      }).entries(servers);*/
-
       var g = svg.selectAll(".arc")
           .data(pie(servers))
         .enter().append("g")
@@ -449,7 +430,7 @@ $(function(){
       .enter().append("g")
         .attr("class", "server");
 
-    lines();
+    donut();
 
 
     function lines() {
@@ -527,9 +508,7 @@ $(function(){
           .attr("dy", ".35em")
           .text(function(d) { return d.name; });
 
-      setTimeout(function() {
-        stackedBar();
-      }, duration + delay);
+      setTimeout(donut, duration + delay);
     }
 
     function horizons() {
@@ -805,8 +784,7 @@ $(function(){
 
     function stackedBar() {
 
-      svg.selectAll(".server").remove();
-      svg.selectAll(".g").remove()
+      svg.selectAll("*").remove();
 
       x = d3.scale.ordinal()
           .rangeRoundBands([10, (w - 120)], .1);
@@ -893,9 +871,7 @@ $(function(){
 
 
 
-      setTimeout(function() {
-        lines();
-      }, duration + delay);
+      setTimeout(lines, duration + delay);
     }
 
     function transposeBar() {
@@ -940,57 +916,52 @@ $(function(){
     }
 
     function donut() {
-      var g = svg.selectAll(".server");
 
-      g.selectAll("rect").remove();
+      svg.selectAll("*").remove();
+
+
+      var radius = Math.min(w, h) / 2;
+
+      var color = d3.scale.category20();
+
+      var arc = d3.svg.arc()
+          .outerRadius(radius - 10)
+          .innerRadius(radius - 100);
 
       var pie = d3.layout.pie()
-          .value(function(d) { return d.sumConnections; });
+          .sort(null)
+          .value(function(d) { return d.connections; });
 
-      var arc = d3.svg.arc();
+      var grouped_servers = server_keys.map(function(name) {
+        total = 0;
+        data.map(function(d) {
+            return +d[name];
+        }).forEach(function(c) { 
+            total += c;
+        })
+        return {
+          server: name,
+          connections: total
+        };
+      });
+
+      g = svg.selectAll(".arc")
+          .data(pie(grouped_servers))
+        .enter().append("g")
+          .attr("class", "arc")
+          .attr("transform", "translate(" + ((w / 2)-40) + "," + (h / 2) + ")");
 
       g.append("path")
-          .style("fill", function(d) { return color(d.key); })
-          .data(function() { return pie(servers); })
-        .transition()
-          .duration(duration)
-          .tween("arc", arcTween);
+          .attr("d", arc)
+          .style("fill", function(d) { return color(d.data.server); });
 
-      g.select("text").transition()
-          .duration(duration)
-          .attr("dy", ".31em");
+      g.append("text")
+          .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+          .attr("dy", ".35em")
+          .style("text-anchor", "middle")
+          .text(function(d) { return d.data.server; });
 
-      svg.select("line").transition()
-          .duration(duration)
-          .attr("y1", 2 * h)
-          .attr("y2", 2 * h)
-          .remove();
-
-      function arcTween(d) {
-        var path = d3.select(this),
-            text = d3.select(this.parentNode.appendChild(this.previousSibling)),
-            x0 = x(d.data.key),
-            y0 = h - y(d.data.sumConnections);
-
-        return function(t) {
-          var r = h / 2 / Math.min(1, t + 1e-3),
-              a = Math.cos(t * Math.PI / 2),
-              xx = (-r + (a) * (x0 + x.rangeBand()) + (1 - a) * (w + h) / 2),
-              yy = ((a) * h + (1 - a) * h / 2),
-              f = {
-                innerRadius: r - x.rangeBand() / (2 - a),
-                outerRadius: r,
-                startAngle: a * (Math.PI / 2 - y0 / r) + (1 - a) * d.startAngle,
-                endAngle: a * (Math.PI / 2) + (1 - a) * d.endAngle
-              };
-
-          path.attr("transform", "translate(" + xx + "," + yy + ")");
-          path.attr("d", arc(f));
-          text.attr("transform", "translate(" + arc.centroid(f) + ")translate(" + xx + "," + yy + ")rotate(" + ((f.startAngle + f.endAngle) / 2 + 3 * Math.PI / 2) * 180 / Math.PI + ")");
-        };
-      }
-
-      setTimeout(donutExplode, duration + delay);
+      setTimeout(stackedBar, duration + delay);
     }
 
     function donutExplode() {
