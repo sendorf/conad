@@ -4,8 +4,8 @@ class CalendarsController < ApplicationController
 	  @servers = Server.all.sort
 	  @date = params[:month] ? DateTime.parse(params[:month],"%Y-%m-%d") : DateTime.now
 	  @connections = Connection.all
-    @end_date = DateTime.now
-    @start_date = @end_date - 30.days
+    @end_date = DateTime.new(@date.year, @date.month, -1)
+    @start_date = DateTime.new(@date.year, @date.month, 1)
 	end
 
 
