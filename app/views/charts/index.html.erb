@@ -1,5 +1,17 @@
 <% title t('charts'), :show_title => false %>
 
+<%= content_tag :button, id: 'line', class: "chart-button col-md-offset-1"  do %>
+  <%= t('home.lines')%>
+<% end %>
+
+<%= content_tag :button, id: 'stackedbar', class: "chart-button col-md-offset-1"  do %>
+  <%= t('home.stackedBars')%>
+<% end %>
+
+<%= content_tag :button, id: 'donut', class: "chart-button col-md-offset-1"  do %>
+  <%= t('home.donut')%>
+<% end %>
+
 <%= content_tag :svg, class: "transition col-md-offset-1", 
                       data: {chart: Connection.chart_format_period_connections(@start_date, @end_date)} do %>
 <% end %>

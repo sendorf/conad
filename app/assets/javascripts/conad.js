@@ -430,7 +430,11 @@ $(function(){
       .enter().append("g")
         .attr("class", "server");
 
-    donut();
+    $('#line').click(lines);
+    $('#stackedbar').click(stackedBar);
+    $('#donut').click(donut);
+
+    lines();
 
 
     function lines() {
@@ -508,7 +512,7 @@ $(function(){
           .attr("dy", ".35em")
           .text(function(d) { return d.name; });
 
-      setTimeout(donut, duration + delay);
+      //setTimeout(donut, duration + delay);
     }
 
     function horizons() {
@@ -871,7 +875,7 @@ $(function(){
 
 
 
-      setTimeout(lines, duration + delay);
+      //setTimeout(lines, duration + delay);
     }
 
     function transposeBar() {
@@ -961,7 +965,7 @@ $(function(){
           .style("text-anchor", "middle")
           .text(function(d) { return d.data.server; });
 
-      setTimeout(stackedBar, duration + delay);
+      //setTimeout(stackedBar, duration + delay);
     }
 
     function donutExplode() {
