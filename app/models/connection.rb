@@ -18,6 +18,49 @@ class Connection < ActiveRecord::Base
                                                           date.to_date.beginning_of_day,
                                                           date.to_date.end_of_day )
                                                           .order("start_time ASC")}
+  scope :month_connections,           lambda{|date| where("extract(month from start_time) = ? AND extract(year from start_time) = ?", date.month, date.year)
+                                                          .order("start_time ASC")}
+
+
+  def self.chart_format_month_connections(date)
+    result = []
+    # gets all connections for a natural month based on the given date
+    connections = month_connections(date).to_a
+    # an array containing all servers
+    servers = Server.all.to_a
+    # end_date and start_date are the last and the first day of the natural month for the given date
+    end_date = DateTime.new(date.year, date.month, -1)
+    start_date = DateTime.new(date.year, date.month, 1)
+    # days to add to the start date
+    days = 0
+    # index to go through the array of connections
+    i = 0
+    connection = connections[i]
+    while days <= (end_date - start_date)
+      current_date = start_date + days.days
+      totals = {}
+      while connection && connection.start_time.day == current_date.day
+        if totals["#{connection.server_id}"]
+          totals["#{connection.server_id}"] += 1
+        else
+          totals["#{connection.server_id}"] = 1
+        end
+        i += 1
+        connection = connections[i]
+      end
+      date_hash = {date: current_date.strftime('%Y%m%d')}
+      servers.each do |server|
+        if totals["#{server.id}"]
+          date_hash["#{server.name}"] = totals["#{server.id}"]
+        else
+          date_hash["#{server.name}"] = 0
+        end
+      end
+      result << date_hash
+      days += 1
+    end
+    return result
+  end
 
 
   def self.chart_format_period_connections(start_date, end_date)
