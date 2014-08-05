@@ -70,6 +70,12 @@ $radius: 3px;
   stroke-width: 1.5px;
 }
 
+// Change charts buttons
+
+.center{
+  text-align: center;
+}
+
 // General styles
 
 #calendar table {
@@ -286,4 +292,44 @@ $radius: 3px;
 
 .link {
   cursor: pointer;
+}
+
+// Icons
+
+@font-face {
+  font-family: 'Icomoon';
+  src:url('icomoon.eot');
+  src:url('icomoon.eot?#iefix') format('embedded-opentype'),
+    url('icomoon.svg#icomoon') format('svg'),
+    url('icomoon.woff') format('woff'),
+    url('icomoon.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-spinner:before {
+  content: "\e600";
+}
+.icon-stats:before {
+  content: "\e601";
+}
+.icon-bars:before {
+  content: "\e602";
+}
+.icon-bars2:before {
+  content: "\e603";
 }

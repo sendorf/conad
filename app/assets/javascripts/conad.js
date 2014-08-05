@@ -953,7 +953,7 @@ $(function(){
           .data(pie(grouped_servers))
         .enter().append("g")
           .attr("class", "arc")
-          .attr("transform", "translate(" + ((w / 2)-40) + "," + (h / 2) + ")");
+          .attr("transform", "translate(" + ((w / 2)-20) + "," + (h / 2) + ")");
 
       g.append("path")
           .attr("d", arc)
