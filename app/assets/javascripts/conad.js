@@ -34,6 +34,31 @@ $(function(){
         width = 1122 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
+      var parseDate = d3.time.format("%Y%m%d").parse;
+
+      var color = d3.scale.category20();
+
+      color.domain(d3.keys(data[data.length-1]).filter(function(key) { return key !== "date"; }));
+
+      var server_keys = d3.keys(data[data.length-1]).filter(function(key) { return key !== "date"; });
+
+      data.forEach(function(d) {
+        d.date = parseDate(d.date.toString());
+      });
+
+      var grouped_servers = server_keys.map(function(name) {
+        total = 0;
+        data.map(function(d) {
+            return +d[name];
+        }).forEach(function(c) { 
+            total += c;
+        })
+        return {
+          server: name,
+          connections: total
+        };
+      });
+
       var x = d3.scale.ordinal()
           .rangeRoundBands([0, width], .1);
 
@@ -54,8 +79,8 @@ $(function(){
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      x.domain(data.map(function(d) { return d.day; }));
-      y.domain([0, d3.max(data, function(d) { return d.connections; })]);
+      x.domain(grouped_servers.map(function(d) { return d.server; }));
+      y.domain([0, d3.max(grouped_servers, function(d) { return d.connections; })]);
 
       chart.append("g")
           .attr("class", "x axis")
@@ -73,13 +98,14 @@ $(function(){
         .text("Connections");
 
       chart.selectAll(".bar")
-          .data(data)
+          .data(grouped_servers)
         .enter().append("rect")
           .attr("class", "bar")
-          .attr("x", function(d) { return x(d.day); })
+          .attr("x", function(d) { return x(d.server); })
           .attr("y", function(d) { return y(d.connections); })
           .attr("height", function(d) { return height - y(d.connections); })
-          .attr("width", x.rangeBand());
+          .attr("width", x.rangeBand())
+          .style("fill", function(d) { return color(d.server); });
     }
 });
 
