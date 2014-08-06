@@ -12,6 +12,10 @@
   <%= t('home.donut')%>
 <% end %>
 
+<%= content_tag :button, id: 'bars', class: "chart-button col-md-offset-1"  do %>
+  <%= t('home.bars')%>
+<% end %>
+
 <%= content_tag :svg, class: "transition col-md-offset-1", 
                       data: {chart: Connection.chart_format_month_connections(@date)} do %>
 <% end %>

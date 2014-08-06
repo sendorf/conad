@@ -4,6 +4,10 @@
     <%= "<span class='icon-stats'></span> #{t('home.lines')}".html_safe%>
   <% end %>
 
+  <%= content_tag :button, id: 'bars', class: "btn btn-info chart-button col-md-offset-1"  do %>
+    <%= "<span class='icon-bars'></span> #{t('home.bars')}".html_safe%>
+  <% end %>
+
   <%= content_tag :button, id: 'stackedbar', class: "btn btn-warning chart-button col-md-offset-1"  do %>
     <%= "<span class='icon-bars2'></span> #{t('home.stackedBars')}".html_safe%>
   <% end %>

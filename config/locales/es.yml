@@ -4,6 +4,7 @@ es:
     lines: 'Lineas'
     stackedBars: 'Barras Apiladas'
     donut: 'Donut'
+    bars: 'Barras'
   charts: 'Gráficas'
   calendar: 'Calendario'
   activerecord:

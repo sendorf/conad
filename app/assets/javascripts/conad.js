@@ -459,6 +459,7 @@ $(function(){
     $('#line').click(lines);
     $('#stackedbar').click(stackedBar);
     $('#donut').click(donut);
+    $('#bars').click(transposeBar);
 
     lines();
 
@@ -905,44 +906,68 @@ $(function(){
     }
 
     function transposeBar() {
-      x
-          .domain(servers.map(function(d) { return d.key; }))
-          .rangeRoundBands([0, w], .2);
+      
+      svg.selectAll("*").remove();
 
-      y
-          .domain([0, d3.max(servers.map(function(d) { return d3.sum(d.values.map(function(d) { return d.connections; })); }))]);
+      var grouped_servers = server_keys.map(function(name) {
+        total = 0;
+        data.map(function(d) {
+            return +d[name];
+        }).forEach(function(c) { 
+            total += c;
+        })
+        return {
+          server: name,
+          connections: total
+        };
+      });
 
-      var stack = d3.layout.stack()
-          .x(function(d, i) { return i; })
-          .y(function(d) { return d.connections; })
-          .out(function(d, y0, y) { d.connections0 = y0; });
+      var x = d3.scale.ordinal()
+          .rangeRoundBands([0, w], .1);
 
-      stack(d3.zip.apply(null, servers.map(function(d) { return d.values; }))); // transpose!
+      var y = d3.scale.linear()
+          .range([h, 0]);
 
-      var g = svg.selectAll(".server");
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom");
 
-      var t = g.transition()
-          .duration(duration / 2);
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left");
 
-      t.selectAll("rect")
-          .delay(function(d, i) { return i * 10; })
-          .attr("y", function(d) { return y(d.connections0 + d.connections) - 1; })
-          .attr("height", function(d) { return h - y(d.connections) + 1; })
-          .attr("x", function(d) { return x(d.symbol); })
+      svg.attr("width", w + m[1] + m[3])
+          .attr("height", h + m[0] + m[2])
+        .append("g")
+          .attr("transform", "translate(" + m[1] + "," + m[0] + ")");
+
+      x.domain(grouped_servers.map(function(d) { return d.server; }));
+      y.domain([0, d3.max(grouped_servers, function(d) { return d.connections; })]);
+
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + h + ")")
+          .call(xAxis);
+
+      svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Connections");
+
+      svg.selectAll(".bar")
+          .data(grouped_servers)
+        .enter().append("rect")
+          .attr("class", "bar")
+          .attr("x", function(d) { return x(d.server); })
+          .attr("y", function(d) { return y(d.connections); })
+          .attr("height", function(d) { return h - y(d.connections); })
           .attr("width", x.rangeBand())
-          .style("stroke-opacity", 1e-6);
-
-      t.select("text")
-          .attr("x", 0)
-          .attr("transform", function(d) { return "translate(" + (x(d.key) + x.rangeBand() / 2) + "," + h + ")"; })
-          .attr("dy", "1.31em")
-          .each("end", function() { d3.select(this).attr("x", null).attr("text-anchor", "middle"); });
-
-      svg.select("line").transition()
-          .duration(duration)
-          .attr("x2", w);
-
-      setTimeout(donut,  duration / 2 + servers[0].values.length * 10 + delay);
+          .style("fill", function(d) { return color(d.server); });
     }
 
     function donut() {
