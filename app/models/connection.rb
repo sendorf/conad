@@ -18,8 +18,50 @@ class Connection < ActiveRecord::Base
                                                           date.to_date.beginning_of_day,
                                                           date.to_date.end_of_day )
                                                           .order("start_time ASC")}
+  scope :date_connections,            lambda{|date| where("start_time BETWEEN ? AND ?",
+                                                          date.to_date.beginning_of_day,
+                                                          date.to_date.end_of_day )
+                                                          .order("start_time ASC")}
   scope :month_connections,           lambda{|date| where("extract(month from start_time) = ? AND extract(year from start_time) = ?", date.month, date.year)
                                                           .order("start_time ASC")}
+
+
+  def self.chart_format_day_connections(date)
+    result = []
+    # gets all connections for a date
+    connections = date_connections(date).to_a
+    # an array containing all servers
+    servers = Server.all.to_a
+    # hours to add to the start date
+    hours = 0
+    # index to go through the array of connections
+    i = 0
+    connection = connections[i]
+    while hours <= 23
+      totals = {}
+      while connection && connection.start_time.hour == hours
+        if totals["#{connection.server_id}"]
+          totals["#{connection.server_id}"] += 1
+        else
+          totals["#{connection.server_id}"] = 1
+        end
+        i += 1
+        connection = connections[i]
+      end
+      date_hash = {time: hours}
+      servers.each do |server|
+        if totals["#{server.id}"]
+          date_hash["#{server.name}"] = totals["#{server.id}"]
+        else
+          date_hash["#{server.name}"] = 0
+        end
+      end
+      result << date_hash
+      hours += 1
+    end
+    return result
+  end
+
 
 
   def self.chart_format_month_connections(date)
@@ -62,7 +104,7 @@ class Connection < ActiveRecord::Base
     return result
   end
 
-
+  # This method is easier to understand but has a bad performance because of the recurrent DB queries
   def self.chart_format_period_connections(start_date, end_date)
     result = []
     ((end_date - start_date) + 1).to_i.times do |days|
@@ -76,6 +118,9 @@ class Connection < ActiveRecord::Base
     return result
   end
 
+
+  # Method created to test charts, not needed anymore
+=begin
   def self.month_and_server_chart_data(month, server)
     day = 1
     count = 0
@@ -92,6 +137,8 @@ class Connection < ActiveRecord::Base
     result << {day: day, connections: count}
     return result
   end
+=end
+
 
   def self.users
     users = []
