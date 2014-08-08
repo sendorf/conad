@@ -9,28 +9,18 @@
                                  :first_day_of_week => 1  do |calendar| %>
     <%= calendar.head(t('week_day.Monday'),t('week_day.Tuesday'),t('week_day.Wednesday'),t('week_day.Thursday'),
                       t('week_day.Friday'), t('week_day.Saturday'), t('week_day.Sunday'),) %>
-    <%= calendar.day(:day_method => :start_time, :td_options=> {:"data-link" => root_path, :class => 'link'} ) do |date, connections| %>
-      <%= date.day %>
-      <% if @server && connections %>
-        <ul>
-          <% connections.first(3).each do |connection| %>
-            <li><%= connection.user %></li>
-          <% end %>
-          <% if connections.length >= 4 %>
-            <li>...</li>
-          <% end %>
-        </ul>
-      <% end %>
+    <%= calendar.day(:day_method => :start_time, :id => '%Y-%m-%d',:td_options=> {:"data-link" => day_path, :class => 'link'} ) do |date, connections| %>
+      <%= date.day %> 
     <% end %>
   <% end %>
-  <div class = "buttons">
-    <%= link_to "<i class='glyphicon glyphicon-log-in white-icon'></i>
-                #{t('calendar_title.go_to_charts')}".html_safe,
-                charts_path,
-                :class => 'btn btn-info',
-                :type => 'button',
-                :icon => 'icon-plus',
-                :title => t('calendar_title.create_server')
-    %>
+    <div class = "buttons">
+      <%= link_to "<i class='glyphicon glyphicon-log-in white-icon'></i>
+                  #{t('calendar_title.go_to_charts')}".html_safe,
+                  charts_path,
+                  :class => 'btn btn-info',
+                  :type => 'button',
+                  :icon => 'icon-plus',
+                  :title => t('calendar_title.create_server')
+      %>
   </div>
 </div>

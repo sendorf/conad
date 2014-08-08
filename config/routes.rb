@@ -60,6 +60,8 @@ Rails.application.routes.draw do
     get :update_connections
   end
 
+  resource :day, only: [:show]
+
   resources :charts, only: [:index]
 
   resources :servers, except: [:index, :show]

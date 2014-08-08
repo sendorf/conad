@@ -4,7 +4,7 @@ $(function(){
     event.stopPropagation();
     event.preventDefault();
     var href = $(this).data('link');
-    window.location.href = href;
+    window.location.href = href+ '?day=' + $(this).attr('id');
   });
 
   // Hide alerts after a while
