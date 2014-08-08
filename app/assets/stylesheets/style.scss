@@ -165,6 +165,14 @@ $radius: 3px;
   text-align: center;
 }
 
+// Day styles
+
+#day a,{
+  text-decoration: none;
+  padding: 0 10px;
+  color: #999;
+}
+
 /* Template-specific stuff
  *
  * Customizations just for the template—these are not necessary for anything

@@ -1,0 +1,13 @@
+<h2 id="day" class="center">
+
+    <%= link_to "<i class='glyphicon glyphicon-arrow-left'></i>".html_safe, 
+                     {:day => (@date-1).strftime("%Y-%m-%d")},
+                     {:title => t('day_title.previous_day') } %>
+
+    <% trans_month = @date.strftime("%B")%>
+    <%=h( @date.strftime("%d") +' '+ t('day.'+@date.strftime("%B")) + ' ' + @date.strftime("%Y")) %>
+    
+    <%= link_to "<i class='glyphicon glyphicon-arrow-right'></i>".html_safe,
+                      {:day => (@date+1).strftime("%Y-%m-%d")}, 
+                      {:title => t('day_title.next_day')} %>
+</h2>
