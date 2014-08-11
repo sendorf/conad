@@ -97,7 +97,7 @@ class Server < ActiveRecord::Base
           end
         else
           rand(25).times do
-            start_hours = (-8..8).sample
+            start_hours = (-8..8).to_a.sample
             hour = rand(8)
             user = user_names.sample
             start_time = DateTime.now + start_hours.hours
