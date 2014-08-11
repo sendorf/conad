@@ -1063,3 +1063,379 @@ $(function(){
 
   }
 });
+
+$(function(){
+
+  var data = $('.days_charts').data('chart')
+
+  if(data){
+
+    var m = [20, 20, 40, 50],
+        w = 1122 - m[1] - m[3],
+        h = 500 - m[0] - m[2];
+
+    var parseDate = d3.time.format("%H").parse;
+
+    var x,
+        y,
+        duration = 30000,
+        delay = 500;
+
+    var color = d3.scale.category20();
+
+    var svg = d3.select(".days_charts")
+        .attr("width", w + m[1] + m[3])
+        .attr("height", h + m[0] + m[2])
+      .append("g")
+        .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+
+    var stocks,
+        servers;
+
+    // A line generator, for the dark stroke.
+    var line = d3.svg.line()
+        .interpolate("basis")
+        .x(function(d) { return x(d.time); })
+        .y(function(d) { return y(d.connections); });
+
+    // A line generator, for the dark stroke.
+    var axis = d3.svg.line()
+        .interpolate("basis")
+        .x(function(d) { return x(d.time); })
+        .y(h);
+
+    // A area generator, for the dark stroke.
+    var area = d3.svg.area()
+        .interpolate("basis")
+        .x(function(d) { return x(d.time); })
+        .y1(function(d) { return y(d.connections); });
+
+
+    color.domain(d3.keys(data[data.length-1]).filter(function(key) { return key !== "time"; }));
+
+    var server_keys = d3.keys(data[data.length-1]).filter(function(key) { return key !== "time"; });
+
+    data.forEach(function(d) {
+      d.time = parseDate(d.time.toString());
+    });
+
+    var servers = server_keys.map(function(name) {
+      return {
+        name: name,
+        values: data.map(function(d) {
+          return {time: d.time, connections: +d[name]};
+        })
+      };
+    });
+
+    // Parse dates and numbers. We assume values are sorted by date.
+    // Also compute the maximum connections per server, needed for the y-domain.
+    servers.forEach(function(s) {
+      s.values.forEach(function(d) { d.time = d.time; d.connections = +d.connections; });
+      s.maxConnections = d3.max(s.values, function(d) { return d.connections; });
+      s.sumConnections = d3.sum(s.values, function(d) { return d.connections; });
+    });
+
+    // Sort by maximum connections, descending.
+    servers.sort(function(a, b) { return b.maxConnections - a.maxConnections; });
+
+    var g = svg.selectAll("g")
+        .data(servers)
+      .enter().append("g")
+        .attr("class", "server");
+
+    $('#line').click(lines);
+    $('#stackedbar').click(stackedBar);
+    $('#donut').click(donut);
+    $('#bars').click(transposeBar);
+
+    lines();
+
+
+    function lines() {
+
+      svg.selectAll("*").remove();
+
+      servers = server_keys.map(function(name) {
+        return {
+          name: name,
+          values: data.map(function(d) {
+            return {time: d.time, connections: +d[name]};
+          })
+        };
+      });
+
+      // Parse dates and numbers. We assume values are sorted by date.
+      // Also compute the maximum connections per server, needed for the y-domain.
+      servers.forEach(function(s) {
+        s.values.forEach(function(d) { d.time = d.time; d.connections = +d.connections; });
+        s.maxConnections = d3.max(s.values, function(d) { return d.connections; });
+        s.sumConnections = d3.sum(s.values, function(d) { return d.connections; });
+      });
+
+      x = d3.time.scale().range([0, w - 60]);
+      y = d3.scale.linear().range([h , 0]);
+
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom");
+
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left");
+
+
+      // Compute the minimum and maximum date across servers.
+      x.domain(d3.extent(data, function(d) { return d.time; }));
+
+      y.domain([
+        d3.min(servers, function(c) { return d3.min(c.values, function(v) { return v.connections; }); }),
+        d3.max(servers, function(c) { return d3.max(c.values, function(v) { return v.connections; }); })
+      ]);
+
+      g = svg.selectAll("g")
+          .data(servers)
+        .enter().append("g")
+          .attr("class", "server");
+
+      g.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + h + ")")
+            .call(xAxis);
+
+      g.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+          .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("Connections");
+
+      var server = svg.selectAll(".server")
+
+      server.append("path")
+          .attr("class", "line")
+          .attr("d", function(d) { return line(d.values); })
+          .style("stroke", function(d) { return color(d.name); });
+
+      server.append("text")
+          .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+          .attr("transform", function(d) { return "translate(" + x(d.value.time) + "," + y(d.value.connections) + ")"; })
+          .attr("x", 3)
+          .attr("dy", ".35em")
+          .text(function(d) { return d.name; });
+
+      //setTimeout(donut, duration + delay);
+    }
+
+    function stackedBar() {
+
+      svg.selectAll("*").remove();
+
+      x = d3.scale.ordinal()
+          .rangeRoundBands([10, (w - 120)], .1);
+
+      y = d3.scale.linear()
+          .rangeRound([h, 0]);
+
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom")
+          .tickFormat(d3.time.format("%H"+":00"));
+
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left")
+          .tickFormat(d3.format(".2s"));
+
+
+      var stacked_servers = $('.days_charts').data('chart');
+
+      stacked_servers.forEach(function(d) {
+        var y0 = 0;
+        d.servers = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+        d.total = d.servers[d.servers.length - 1].y1;
+      });
+
+      x.domain(stacked_servers.map(function(s) { return s.time; }));
+      y.domain([0, d3.max(stacked_servers, function(s) { return s.total; })]);
+
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + h + ")")
+          .call(xAxis)
+        .selectAll("text")  
+              .style("text-anchor", "end")
+              .attr("dx", "-.8em")
+              .attr("dy", ".15em")
+              .attr("transform", function(d) {
+                  return "rotate(-65)" 
+                  });
+
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Connections");
+
+      var time = svg.selectAll(".time")
+          .data(stacked_servers)
+        .enter().append("g")
+          .attr("class", "g")
+          .attr("transform", function(d) { return "translate(" + x(d.time) + ",0)"; });
+
+      time.selectAll("rect")
+          .data(function(d) { return d.servers; })
+        .enter().append("rect")
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.y1); })
+          .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+          .style("fill", function(d) { return color(d.name); });
+
+      var legend = svg.selectAll(".legend")
+          .data(color.domain().slice().reverse())
+        .enter().append("g")
+          .attr("class", "legend")
+          .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+      legend.append("rect")
+          .attr("x", w - 18)
+          .attr("width", 18)
+          .attr("height", 18)
+          .style("fill", color);
+
+      legend.append("text")
+          .attr("x", w - 24)
+          .attr("y", 9)
+          .attr("dy", ".35em")
+          .style("text-anchor", "end")
+          .text(function(d) { return d; });
+
+
+
+      //setTimeout(lines, duration + delay);
+    }
+
+    function transposeBar() {
+      
+      svg.selectAll("*").remove();
+
+      var grouped_servers = server_keys.map(function(name) {
+        total = 0;
+        data.map(function(d) {
+            return +d[name];
+        }).forEach(function(c) { 
+            total += c;
+        })
+        return {
+          server: name,
+          connections: total
+        };
+      });
+
+      var x = d3.scale.ordinal()
+          .rangeRoundBands([0, w], .1);
+
+      var y = d3.scale.linear()
+          .range([h, 0]);
+
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom");
+
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left");
+
+      svg.attr("width", w + m[1] + m[3])
+          .attr("height", h + m[0] + m[2])
+        .append("g")
+          .attr("transform", "translate(" + m[1] + "," + m[0] + ")");
+
+      x.domain(grouped_servers.map(function(d) { return d.server; }));
+      y.domain([0, d3.max(grouped_servers, function(d) { return d.connections; })]);
+
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + h + ")")
+          .call(xAxis);
+
+      svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Connections");
+
+      svg.selectAll(".bar")
+          .data(grouped_servers)
+        .enter().append("rect")
+          .attr("class", "bar")
+          .attr("x", function(d) { return x(d.server); })
+          .attr("y", function(d) { return y(d.connections); })
+          .attr("height", function(d) { return h - y(d.connections); })
+          .attr("width", x.rangeBand())
+          .style("fill", function(d) { return color(d.server); });
+    }
+
+
+    function donut() {
+
+      svg.selectAll("*").remove();
+
+
+      var radius = Math.min(w, h) / 2;
+
+      var color = d3.scale.category20();
+
+      var arc = d3.svg.arc()
+          .outerRadius(radius - 10)
+          .innerRadius(radius - 100);
+
+      var pie = d3.layout.pie()
+          .sort(null)
+          .value(function(d) { return d.connections; });
+
+      var grouped_servers = server_keys.map(function(name) {
+        total = 0;
+        data.map(function(d) {
+            return +d[name];
+        }).forEach(function(c) { 
+            total += c;
+        })
+        return {
+          server: name,
+          connections: total
+        };
+      });
+
+      g = svg.selectAll(".arc")
+          .data(pie(grouped_servers))
+        .enter().append("g")
+          .attr("class", "arc")
+          .attr("transform", "translate(" + ((w / 2)-20) + "," + (h / 2) + ")");
+
+      g.append("path")
+          .attr("d", arc)
+          .style("fill", function(d) { return color(d.data.server); });
+
+      g.append("text")
+          .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+          .attr("dy", ".35em")
+          .style("text-anchor", "middle")
+          .text(function(d) { return d.data.server; });
+
+      //setTimeout(stackedBar, duration + delay);
+    }
+
+  }
+});
