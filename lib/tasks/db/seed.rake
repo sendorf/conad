@@ -39,7 +39,7 @@ namespace :db do
 
       servers.each do |server|
         1000.times do
-          start_hours = (-8..8).sample
+          start_hours = (-8..8).to_a.sample
           date = rand(60)
           hour = rand(8)
           user = user_names.sample
