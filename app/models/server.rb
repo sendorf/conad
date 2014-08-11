@@ -62,7 +62,6 @@ class Server < ActiveRecord::Base
         last_lines = stdout.split("\n")
 
         if last_lines[0].split(" ")[3] == "denied"
-          puts 'Joder'
           result = false
         else
           #Creates the connections from the log obtained from 'last' command
@@ -98,9 +97,10 @@ class Server < ActiveRecord::Base
           end
         else
           rand(25).times do
+            start_hours = (-8..8).sample
             hour = rand(8)
             user = user_names.sample
-            start_time = DateTime.now
+            start_time = DateTime.now + start_hours.hours
             end_time = start_time + hour.hours
             connection = Connection.new(:server_id => server.id, :user => user, 
                          :start_time => start_time, :end_time=> end_time)

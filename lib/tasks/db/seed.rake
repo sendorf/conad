@@ -39,10 +39,11 @@ namespace :db do
 
       servers.each do |server|
         1000.times do
+          start_hours = (-8..8).sample
           date = rand(60)
           hour = rand(8)
           user = user_names.sample
-          start_time = DateTime.now - date.days
+          start_time = DateTime.now + start_hours.hours - date.days
           end_time = start_time + hour.hours
           create(:connection, :user => user,  
                  :end_time => end_time,
