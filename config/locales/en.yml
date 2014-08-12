@@ -53,18 +53,18 @@ en:
     previous_day: 'Día Anterior'
     next_day: 'Día Siguiente'
   month:
-    January: 'Enero'
-    February: 'Febrero'
-    March: 'Marzo'
-    April: Abril
-    May: Mayo
-    June: Junio
-    July: Julio
-    August: Agosto
-    September: Septiembre
-    October: Octubre
-    November: Noviembre
-    Dicember: Diciembre
+    January: 'January'
+    February: 'February'
+    March: 'March'
+    April: April
+    May: May
+    June: June
+    July: July
+    August: August
+    September: September
+    October: October
+    November: November
+    Dicember: Dicember
   week_day:
     Monday: 'Monday'
     Tuesday: 'Tuesday'
