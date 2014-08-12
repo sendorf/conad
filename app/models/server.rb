@@ -84,10 +84,11 @@ class Server < ActiveRecord::Base
             date = last_date + i.days
             if Connection.server_date_connections(server, date).length == 0
               rand(25).times do
+                start_hours = (-8..8).to_a.sample
                 date = last_date + i.days
                 hour = rand(8)
                 user = user_names.sample
-                start_time = date
+                start_time = date + start_hours.hours
                 end_time = date + hour.hours
                 connection = Connection.new(:server_id => server.id, :user => user, 
                              :start_time => start_time, :end_time=> end_time)
