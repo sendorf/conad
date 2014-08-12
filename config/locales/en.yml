@@ -50,8 +50,8 @@ en:
     November: 'de Noviembre'
     Dicember: 'de Diciembre'
   day_title:
-    previous_day: 'Día Anterior'
-    next_day: 'Día Siguiente'
+    previous_day: 'Previous Day'
+    next_day: 'Next Day'
   month:
     January: 'January'
     February: 'February'
