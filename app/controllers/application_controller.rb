@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
 	def set_locale
-    if I18n.available_locales.include?(params[:locale].to_sym) 
+    if params[:locale] && I18n.available_locales.include?(params[:locale].to_sym) 
       I18n.locale = params[:locale]
     else
       I18n.locale = :en
