@@ -82,6 +82,7 @@ en:
     next_month: 'Next Month'
   navbar:
     servers: 'Servers'
+    languages: 'Languages'
   server:
     new: 'New Server'
     edit: 'Edit Server %{server}'

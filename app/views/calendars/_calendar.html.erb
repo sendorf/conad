@@ -9,14 +9,16 @@
                                  :first_day_of_week => 1  do |calendar| %>
     <%= calendar.head(t('week_day.Monday'),t('week_day.Tuesday'),t('week_day.Wednesday'),t('week_day.Thursday'),
                       t('week_day.Friday'), t('week_day.Saturday'), t('week_day.Sunday'),) %>
-    <%= calendar.day(:day_method => :start_time, :id => '%Y-%m-%d',:td_options=> {:"data-link" => day_path, :class => 'link'} ) do |date, connections| %>
+    <%= calendar.day(:day_method => :start_time, :id => '%Y-%m-%d',:td_options=> {
+                    :"data-link" => I18n.locale == :en ? day_path : day_path(:locale => I18n.locale), 
+                    :class => 'link'} ) do |date, connections| %>
       <%= date.day %> 
     <% end %>
   <% end %>
     <div class = "buttons">
       <%= link_to "<i class='glyphicon glyphicon-log-in white-icon'></i>
                   #{t('calendar_title.go_to_charts')}".html_safe,
-                  charts_path,
+                  I18n.locale == :en ? charts_path : charts_path(:locale => I18n.locale),
                   :class => 'btn btn-info',
                   :type => 'button',
                   :icon => 'icon-plus',

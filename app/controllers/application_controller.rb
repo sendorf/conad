@@ -6,8 +6,14 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
+  def default_url_options(options={})
+    { locale: I18n.locale == :en ? '' : I18n.locale }
+  end
+
 	def set_locale
-  	if I18n.available_locales.include?(extract_locale_from_accept_language_header)
+    if params[:locale]
+      I18n.locale = params[:locale]
+  	elsif I18n.available_locales.include?(extract_locale_from_accept_language_header)
       I18n.locale = extract_locale_from_accept_language_header
     else
       I18n.locale = :en

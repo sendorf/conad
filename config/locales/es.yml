@@ -61,6 +61,7 @@ es:
     next_month: 'Mes Siguiente'
   navbar:
     servers: 'Servidores'
+    languages: 'Idiomas'
   server:
     new: 'Nuevo Servidor'
     edit: 'Editar Servidor %{server}'

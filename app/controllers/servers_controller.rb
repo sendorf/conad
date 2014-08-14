@@ -1,11 +1,13 @@
 class ServersController < ApplicationController
 
 	def new
+		I18n.locale ? params[:locale] : :en
 		@server = Server.new
 		@servers = Server.all.sort
 	end
 
 	def edit
+		I18n.locale ? params[:locale] : :en
 		@server = Server.find(params[:id])
 		@servers = Server.all.sort
 		@edit = true
@@ -31,7 +33,6 @@ class ServersController < ApplicationController
 		if @server.update_attributes(server_params)
 			flash[:success] = successfully_updated_text Server
 			redirect_to root_path
-
 		else
 			flash[:danger] = could_not_update_text Server
 			redirect_to edit_server_path(@server)

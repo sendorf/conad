@@ -20,11 +20,15 @@
   <nav class="navbar-inverse navbar-static-top nav navbar" role="navigation">
     <div class="navbar-inner">
       <div class="container">          
-        <a class="navbar-brand" href="/">CONAD</a>
+        <%= link_to "CONAD",
+          root_path,
+          :class => "navbar-brand"
+        %>
         <ul class="nav centered-nav navbar-nav">
           <li class="nav centered-li">
             <%= link_to "<i class='glyphicon glyphicon-refresh white-icon'></i>
-                #{t('home.update_connections')}".html_safe , update_connections_connection_path  %>
+                #{t('home.update_connections')}".html_safe , 
+                update_connections_connection_path%>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right ">
@@ -36,13 +40,15 @@
             <ul class="dropdown-menu" id= "servers">
               <% @servers.each do |server| %>
                 <li>
-                  <%= link_to server.name , edit_server_path(server)  %>
+                  <%= link_to server.name , 
+                  edit_server_path(server) %>
                 </li>
                 <li class="divider"></li>
               <% end %>
               <li>
                 <%= link_to "<i class='glyphicon glyphicon-plus white-icon'></i>
-                #{t('calendar_title.create_server')}".html_safe , new_server_path %>
+                #{t('calendar_title.create_server')}".html_safe , 
+                 new_server_path %>
               </li>
             </ul>
           </li>

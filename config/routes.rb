@@ -53,18 +53,21 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  scope "(:locale)" do
 
-  resource :calendar, only: [:show]
+    resource :calendar, only: [:show]
 
-  resource :connection, only: [] do
-    get :update_connections
+    resource :connection, only: [] do
+      get :update_connections
+    end
+
+    resource :day, only: [:show]
+
+    resources :charts, only: [:index]
+
+    resources :servers, except: [:index, :show]
+
+    root :to => "calendars#show"
   end
 
-  resource :day, only: [:show]
-
-  resources :charts, only: [:index]
-
-  resources :servers, except: [:index, :show]
-
-  root :to => "calendars#show"
 end
