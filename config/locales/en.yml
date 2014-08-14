@@ -95,6 +95,7 @@ en:
         password: 'Password'
         url: "Server's URL"
         description: 'Description'
+        password_confirmation: 'Password Confirmation'
     hints:
       defaults:
         user: 'SSH Username'

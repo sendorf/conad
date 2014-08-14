@@ -74,6 +74,7 @@ es:
         password: 'Contraseña'
         url: 'URL del Servidor'
         description: 'Descripción'
+        password_confirmation: 'Confirmación de Contraseña'
     hints:
       defaults:
         user: 'Nombre de usuario ssh'
