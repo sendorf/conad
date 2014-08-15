@@ -36,35 +36,9 @@ en:
       connection:
         one: 'Connection'
         other: 'Connections'
-  day:
-    January: 'de Enero'
-    February: 'de Febrero'
-    March: 'de Marzo'
-    April: 'de Abril'
-    May: 'de Mayo'
-    June: 'de Junio'
-    July: 'de Julio'
-    August: 'de Agosto'
-    September: 'de Septiembre'
-    October: 'de Octubre'
-    November: 'de Noviembre'
-    Dicember: 'de Diciembre'
   day_title:
     previous_day: 'Previous Day'
     next_day: 'Next Day'
-  month:
-    January: 'January'
-    February: 'February'
-    March: 'March'
-    April: April
-    May: May
-    June: June
-    July: July
-    August: August
-    September: September
-    October: October
-    November: November
-    Dicember: Dicember
   week_day:
     Monday: 'Monday'
     Tuesday: 'Tuesday'
@@ -110,3 +84,7 @@ en:
       successful_creation: "%{model} successfully created."
       successful_update: "%{model} successfully updated."
       successful_deletion: "%{model} successfuly deleted."
+  time:
+    formats:
+      month: "%B %Y"
+      day: "%B %d, %Y"
