@@ -24,6 +24,7 @@ class ServersController < ApplicationController
 	end
 
 	def show
+		@date = params[:month] ? DateTime.parse(params[:month],"%Y-%m-%d") : DateTime.now
 		@server = Server.find(params[:id])
 		@servers = Server.all.sort
 	end
