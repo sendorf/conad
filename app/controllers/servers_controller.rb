@@ -7,7 +7,6 @@ class ServersController < ApplicationController
 	end
 
 	def edit
-		I18n.locale ? params[:locale] : :en
 		@server = Server.find(params[:id])
 		@servers = Server.all.sort
 		@edit = true
@@ -22,6 +21,11 @@ class ServersController < ApplicationController
 			flash[:danger] = could_not_create_text Server
 			redirect_to new_server_path(@server)
 		end
+	end
+
+	def show
+		@server = Server.find(params[:id])
+		@servers = Server.all.sort
 	end
 
 	def update

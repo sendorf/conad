@@ -65,7 +65,7 @@ Rails.application.routes.draw do
 
     resources :charts, only: [:index]
 
-    resources :servers, except: [:index, :show]
+    resources :servers, except: [:index]
 
     root :to => "calendars#show"
   end
