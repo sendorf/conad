@@ -10,8 +10,7 @@ class Connection < ActiveRecord::Base
   scope :server_connections,          lambda{|server| where(:server_id => server.id).order("start_time ASC")} 
   #scope :month_connections,          lambda{|month| where(:month => month)}
   scope :last_connection_for_server,  lambda{|server| where(:server_id => server.id).order("start_time DESC").limit(1)}
-  scope :month_server_connections,    lambda{|month, server| select('start_time, server_id')
-                                                          .where(["(server_id = ? AND extract(month from start_time) = ?)", server.id, month])
+  scope :month_server_connections,    lambda{|date, server| where(["(server_id = ? AND extract(month from start_time) = ? AND extract(year from start_time) = ?)", server.id, date.month, date.year])
                                                           .order("start_time ASC")}
   scope :server_date_connections,            lambda{|server, date| where("server_id = ? AND start_time BETWEEN ? AND ?", 
                                                           server.id,
@@ -25,6 +24,45 @@ class Connection < ActiveRecord::Base
   scope :month_connections,           lambda{|date| where("extract(month from start_time) = ? AND extract(year from start_time) = ?", date.month, date.year)
                                                           .order("start_time ASC")}
 
+  def self.chart_format_server_month_connections(server, date)
+    result = []
+    # gets all connections of a server for a date
+    connections = month_server_connections(date, server).to_a
+    # an array containing all users for these connections
+    users = get_users_from_connections(connections)
+    # end_date and start_date are the last and the first day of the natural month for the given date
+    end_date = DateTime.new(date.year, date.month, -1)
+    start_date = DateTime.new(date.year, date.month, 1)
+    # days to add to the start date
+    days = 0
+    # index to go through the array of connections
+    i = 0
+    connection = connections[i]
+    while days <= (end_date - start_date)
+      current_date = start_date + days.days
+      totals = {}
+      while connection && connection.start_time.day == current_date.day
+        if totals["#{connection.user}"]
+          totals["#{connection.user}"] += 1
+        else
+          totals["#{connection.user}"] = 1
+        end
+        i += 1
+        connection = connections[i]
+      end
+      date_hash = {date: current_date.strftime('%Y%m%d')}
+      users.each do |user|
+        if totals["#{user}"]
+          date_hash["#{user}"] = totals["#{user}"]
+        else
+          date_hash["#{user}"] = 0
+        end
+      end
+      result << date_hash
+      days += 1
+    end
+    return result
+  end
 
   def self.chart_format_day_connections(date)
     result = []
@@ -139,7 +177,6 @@ class Connection < ActiveRecord::Base
   end
 =end
 
-
   def self.users
     users = []
     Connection.select(:user).uniq.each do |connection|
@@ -186,6 +223,16 @@ class Connection < ActiveRecord::Base
 
     user_dates
 
+  end
+
+  private 
+
+  def self.get_users_from_connections(connections)
+    users = []
+    connections.each do |connection|
+      users << connection.user
+    end
+    return users.uniq
   end
 
 end
