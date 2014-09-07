@@ -32,7 +32,7 @@ namespace :db do
 
       servers = Server.all
       user_names = Array.new
-      50.times do
+      20.times do
         name = Faker::Name.first_name
         user_names.push(name)
       end
