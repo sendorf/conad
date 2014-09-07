@@ -41,7 +41,7 @@
               <% @servers.each do |server| %>
                 <li>
                   <%= link_to server.name , 
-                  edit_server_path(server) %>
+                  server_path(server) %>
                 </li>
                 <li class="divider"></li>
               <% end %>
