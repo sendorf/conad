@@ -1,24 +1,5 @@
 <% title t('calendar'), :show_title => false %>
-<div class= "change-chart-buttons center">
-  <%= content_tag :button, id: 'line', class: "btn btn-success chart-button"  do %>
-    <%= "<span class='icon-stats'></span> #{t('home.lines')}".html_safe%>
-  <% end %>
 
-  <%= content_tag :button, id: 'bars', class: "btn btn-info chart-button col-md-offset-1"  do %>
-    <%= "<span class='icon-bars'></span> #{t('home.bars')}".html_safe%>
-  <% end %>
-
-  <%= content_tag :button, id: 'stackedbar', class: "btn btn-warning chart-button col-md-offset-1"  do %>
-    <%= "<span class='icon-bars2'></span> #{t('home.stackedBars')}".html_safe%>
-  <% end %>
-
-  <%= content_tag :button, id: 'donut', class: "btn btn-primary chart-button col-md-offset-1"  do %>
-    <%= "<span class='icon-spinner'></span> #{t('home.donut')}".html_safe%>
-  <% end %>
-
-  <%= content_tag :svg, class: "transition", 
-                        data: {chart: Connection.chart_format_month_connections(@date)} do %>
-  <% end %>
-</div>
+<%= render 'top_buttons' %>
 
 <%= render 'calendar' %>
