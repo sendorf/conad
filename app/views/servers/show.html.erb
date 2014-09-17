@@ -17,7 +17,7 @@
   <% end %>
 
   <%= content_tag :svg, class: "transition", 
-                        data: {chart: Connection.chart_format_month_connections(@date)} do %>
+                        data: {chart: Connection.chart_format_server_month_connections(@server, @date)} do %>
   <% end %>
 </div>
 

@@ -16,7 +16,8 @@
   <% end %>
 
   <%= content_tag :svg, class: "days_charts", 
-                        data: {chart: Connection.chart_format_day_connections(@date)} do %>
+                        data: {chart: @server ? Connection.chart_format_server_day_connections(@server, @date) :
+                          Connection.chart_format_day_connections(@date)} do %>
   <% end %>
 </div>
 

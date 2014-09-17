@@ -12,6 +12,11 @@ class Connection < ActiveRecord::Base
   scope :last_connection_for_server,  lambda{|server| where(:server_id => server.id).order("start_time DESC").limit(1)}
   scope :month_server_connections,    lambda{|date, server| where(["(server_id = ? AND extract(month from start_time) = ? AND extract(year from start_time) = ?)", server.id, date.month, date.year])
                                                           .order("start_time ASC")}
+  scope :date_server_connections,            lambda{|date, server| where("server_id = ? AND start_time BETWEEN ? AND ?",
+                                                          server.id,
+                                                          date.to_date.beginning_of_day,
+                                                          date.to_date.end_of_day )
+                                                          .order("start_time ASC")}
   scope :server_date_connections,            lambda{|server, date| where("server_id = ? AND start_time BETWEEN ? AND ?", 
                                                           server.id,
                                                           date.to_date.beginning_of_day,
@@ -23,6 +28,45 @@ class Connection < ActiveRecord::Base
                                                           .order("start_time ASC")}
   scope :month_connections,           lambda{|date| where("extract(month from start_time) = ? AND extract(year from start_time) = ?", date.month, date.year)
                                                           .order("start_time ASC")}
+
+  def self.chart_format_server_day_connections(server, date)
+    result = []
+    # gets all connections for a date
+    result = []
+    # gets all connections of a server for a date
+    connections = month_server_connections(date, server).to_a
+    # an array containing all users for these connections
+    users = get_users_from_connections(connections)
+    # hours to add to the start date
+    hours = 0
+    # index to go through the array of connections
+    i = 0
+    while hours <= 23
+      totals = {}
+      connections.each do |connection|
+        if connection.start_time.hour <= hours && connection.end_time.hour > hours
+          if totals["#{connection.user}"]
+            totals["#{connection.user}"] += 1
+          else
+            totals["#{connection.user}"] = 1
+          end
+          i += 1
+          connection = connections[i]
+        end
+      end
+      date_hash = {time: hours}
+      users.each do |user|
+        if totals["#{user}"]
+          date_hash["#{user}"] = totals["#{user}"]
+        else
+          date_hash["#{user}"] = 0
+        end
+      end
+      result << date_hash
+      hours += 1
+    end
+    return result
+  end
 
   def self.chart_format_server_month_connections(server, date)
     result = []
