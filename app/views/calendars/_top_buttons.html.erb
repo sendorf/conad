@@ -1,22 +1,56 @@
-<div class= "change-chart-buttons center col-md-9">
+<div class= "change-chart-buttons center col-md-8">
   <%= content_tag :button, id: 'line', class: "btn btn-success chart-button"  do %>
     <%= "<span class='icon-stats'></span> #{t('home.lines')}".html_safe%>
   <% end %>
 
-  <%= content_tag :button, id: 'bars', class: "btn btn-info chart-button col-md-offset-1"  do %>
+  <%= content_tag :button, id: 'bars', class: "btn btn-success chart-button col-md-offset-1"  do %>
     <%= "<span class='icon-bars'></span> #{t('home.bars')}".html_safe%>
   <% end %>
 
-  <%= content_tag :button, id: 'stackedbar', class: "btn btn-warning chart-button col-md-offset-1"  do %>
+  <%= content_tag :button, id: 'stackedbar', class: "btn btn-success chart-button col-md-offset-1"  do %>
     <%= "<span class='icon-bars2'></span> #{t('home.stackedBars')}".html_safe%>
   <% end %>
 
-  <%= content_tag :button, id: 'donut', class: "btn btn-primary chart-button col-md-offset-1"  do %>
+  <%= content_tag :button, id: 'donut', class: "btn btn-success chart-button col-md-offset-1"  do %>
     <%= "<span class='icon-spinner'></span> #{t('home.donut')}".html_safe%>
   <% end %>
 </div>
+<%= content_tag :div, class: "col-md-4 center"  do %>
+  <%= link_to "<i class='glyphicon glyphicon-refresh white-icon'></i>
+              #{t('home.update_connections')}".html_safe , 
+              update_connections_connection_path,
+              :class => "btn btn-primary"%>
+  <div class="btn-group col-md-offset-1">
+    <% if @server%>
+      <%= link_to "<i class='glyphicon glyphicon-wrench white-icon'></i>
+                  #{t('calendar_title.edit_server')}".html_safe , 
+                  edit_server_path(@server),
+                  :class => "btn btn-primary"%>
+    <% else %>
+      <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        <i class="glyphicon glyphicon-cloud white-icon"></i>
+        <%= t('navbar.servers')%> 
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" id= "servers" role="menu">
+        <% @servers.each do |server| %>
+          <li>
+            <%= link_to server.name , 
+            server_path(server) %>
+          </li>
+          <li class="divider"></li>
+        <% end %>
+        <li>
+          <%= link_to "<i class='glyphicon glyphicon-plus white-icon'></i>
+          #{t('calendar_title.create_server')}".html_safe , 
+           new_server_path %>
+        </li>
+      </ul>      
+    <% end %>
+  </div>
+<% end %>
 <div class="center" >
   <%= content_tag :svg, class: "#{@day ? "days_charts" : "transition"}", 
-                        data: {chart: @day ? (@server ? Connection.chart_format_server_day_connections(@server, @day) : Connection.chart_format_day_connections(@day)) : Connection.chart_format_month_connections(@date)} do %>
+                        data: {chart: @day ? (@server ? Connection.chart_format_server_day_connections(@server, @day) : Connection.chart_format_day_connections(@day)) : (@server ? Connection.chart_format_server_month_connections(@server, @date) : Connection.chart_format_month_connections(@date))} do %>
   <% end %>
 </div>

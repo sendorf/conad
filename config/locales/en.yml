@@ -21,7 +21,7 @@
 
 en:
   home:
-    update_connections: 'Update Connections'
+    update_connections: 'Update'
     lines: 'Lines'
     stackedBars: 'Stacked Bars'
     donut: 'Donut'

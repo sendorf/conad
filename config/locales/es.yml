@@ -1,6 +1,6 @@
 es:
   home:
-    update_connections: 'Actualizar Conexiones'
+    update_connections: 'Actualizar'
     lines: 'Lineas'
     stackedBars: 'Barras Apiladas'
     donut: 'Donut'
