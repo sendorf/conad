@@ -11,7 +11,7 @@ set :repo_url, 'git@bitbucket.org:sendorf/conad.git'
 # set :deploy_to, '/var/www/my_app_name'
 
 set :rbenv_type, :user # or :system, depends on your rbenv setup
-set :rbenv_ruby, '2.1.1'
+set :rbenv_ruby, '2.2.0'
 
 # in case you want to set ruby version from the file:
 #set :rbenv_ruby, File.read('.ruby-version').strip
