@@ -1,4 +1,4 @@
-ruby '2.1.1'
+ruby '2.2.0'
 
 source 'https://rubygems.org'
 
@@ -25,6 +25,7 @@ gem 'rails_12factor'
 gem 'coffee-rails'
 gem "aes", "~> 0.5.0", :require => 'aes'
 gem 'net-ssh', :require => 'net/ssh'
+gem 'whenever'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
