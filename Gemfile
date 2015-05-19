@@ -26,6 +26,7 @@ gem 'coffee-rails'
 gem "aes", "~> 0.5.0", :require => 'aes'
 gem 'net-ssh', :require => 'net/ssh'
 gem 'whenever'
+gem "unicorn"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
