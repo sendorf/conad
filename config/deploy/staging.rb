@@ -8,9 +8,9 @@ set :application, 'conad'
 
 set :tmp_dir, "/home/conad/tmp/capistrano"
 
-role :app, %w{conad2@10.195.46.9}
-role :web, %w{conad2@10.195.46.9}
-role :db,  %w{conad2@10.195.46.9}
+role :app, %w{conad@10.195.46.9}
+role :web, %w{conad@10.195.46.9}
+role :db,  %w{conad@10.195.46.9}
 
 # Extended Server Syntax
 # ======================
