@@ -15,14 +15,4 @@
       <%= date.day %> 
     <% end %>
   <% end %>
-    <div class = "buttons">
-      <%= link_to "<i class='glyphicon glyphicon-log-in white-icon'></i>
-                  #{t('calendar_title.go_to_charts')}".html_safe,
-                  I18n.locale == :en ? charts_path : charts_path(:locale => I18n.locale),
-                  :class => 'btn btn-info',
-                  :type => 'button',
-                  :icon => 'icon-plus',
-                  :title => t('calendar_title.create_server')
-      %>
-  </div>
 </div>
