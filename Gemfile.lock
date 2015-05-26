@@ -64,7 +64,6 @@ GEM
     capistrano-unicorn-nginx (3.3.3)
       capistrano (>= 3.1)
       sshkit (>= 1.2.0)
-    chronic (0.10.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -175,8 +174,6 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    whenever (0.9.4)
-      chronic (>= 0.6.3)
 
 PLATFORMS
   ruby
@@ -209,4 +206,3 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   watu_table_builder!
-  whenever

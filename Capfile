@@ -22,7 +22,7 @@ require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/unicorn_nginx'
-require 'whenever/capistrano'
+# require 'whenever/capistrano'
 
 # require 'capistrano/passenger'
 
