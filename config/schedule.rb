@@ -19,10 +19,6 @@
 
 # Learn more: http://github.com/javan/whenever
 
-if @environment=='staging'
-	env :PATH, ENV['PATH']
-end
-
 every :hour do
   rake "servers:update"
 end
