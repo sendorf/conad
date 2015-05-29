@@ -24,5 +24,5 @@ if @environment=='staging'
 end
 
 every :hour do
-  runner "Server.update_connections"
+  rake "servers:update"
 end
