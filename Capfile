@@ -23,7 +23,7 @@ require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/unicorn_nginx'
 require 'capistrano/sidekiq'
-require 'whenever/capistrano'
+# require 'whenever/capistrano'
 
 # require 'capistrano/passenger'
 
