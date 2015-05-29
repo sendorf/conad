@@ -49,7 +49,7 @@ class Server < ActiveRecord::Base
     stdout = ""
     result = true
     Server.all.each do |server|
-      UpdateServerConnectionsWorker.perform_async server
+      UpdateServerConnectionsWorker.perform_async server.id
     end
     return result;
   end
