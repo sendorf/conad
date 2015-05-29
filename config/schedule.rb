@@ -19,6 +19,12 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every :hour do
-  rake "servers:update"
-end
+	set :output, "#{path}/log/cron/cron.log"
+
+	if @environment != 'development' || @environment != 'test'
+		env :PATH, ENV['PATH']
+
+		every 1.hours do
+	  	rake "servers:update"
+		end
+	end
