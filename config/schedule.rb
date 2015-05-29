@@ -21,7 +21,7 @@
 
 	set :output, "#{path}/log/cron/cron.log"
 
-	if @environment != 'development' || @environment != 'test'
+	if @environment == 'staging'
 		env :PATH, ENV['PATH']
 
 		every 1.hours do
