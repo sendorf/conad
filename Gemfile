@@ -25,8 +25,10 @@ gem 'rails_12factor'
 gem 'coffee-rails'
 gem "aes", "~> 0.5.0", :require => 'aes'
 gem 'net-ssh', :require => 'net/ssh'
-# gem 'whenever'
+gem 'whenever'
 gem "unicorn"
+
+gem 'sidekiq'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -46,6 +48,7 @@ group :development do
 	gem 'capistrano-rails'
 	gem 'capistrano-rbenv'
 	gem 'capistrano-unicorn-nginx'
+	gem 'capistrano-sidekiq'
 end
 
 # To use ActiveModel has_secure_password

@@ -22,3 +22,7 @@
 if @environment=='staging'
 	env :PATH, ENV['PATH']
 end
+
+every :hour do
+  runner "Server.update_connections"
+end
