@@ -32,7 +32,6 @@ class Server < ActiveRecord::Base
   end
 
   def self.update_connections
-
     stdout = ""
     result = true
     Server.all.each do |server|
