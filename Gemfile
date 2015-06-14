@@ -23,7 +23,7 @@ gem 'sass-rails'
 gem 'bootstrap-sass'
 gem 'rails_12factor'
 gem 'coffee-rails'
-gem "aes", "~> 0.5.0", :require => 'aes'
+gem "bcrypt"
 gem 'net-ssh', :require => 'net/ssh'
 # gem 'whenever'
 gem "unicorn"
