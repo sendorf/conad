@@ -1,5 +1,3 @@
-require 'devise/encryptor'
-
 class Server < ActiveRecord::Base
 
   attr_accessor :password
@@ -14,24 +12,40 @@ class Server < ActiveRecord::Base
 
   has_many :connections
 
-  def self.pepper
-    "085473f3f3776bcb6a2b0097e77ea75cb18f713b2c350b4eb88b575f55c6ecfa8f88e0d90e0b0090dc4f9a96d68199c62210508a1caa112d614235cda057dc57"
-  end
-
-  def self.stretches
-    10
-  end
-
   def password=(new_password)
-    @password = new_password
-    self.password_hash = password_digest(@password) if @password.present?
-  end
-
-  def valid_password?(password)
-    Devise::Encryptor.compare(self.class, password_hash, password)
+    key_file = File.join(Rails.root, 'config', 'private_key.aes') #File where the private key is going to be estored.
+    if File.exist?(key_file)
+      begin
+        #Reads the file where the key is stored
+        file = File.open(key_file, 'r')
+        key = file.gets
+        file.close # Closes the file
+        @password = AES.encrypt(new_password, key) # Encrypts the password using the secret key
+        self.password_hash = @password #Stores the hash of the password after being encrypted
+      rescue => err
+        puts "Exception: #{err}"
+        err
+      end
+    else
+      begin
+        #Creates the key
+        key = AES.key
+        # Writes in the file
+        File.open(key_file, 'w+') do |file|
+          file.write key
+        end
+        @password = AES.encrypt(new_password, key) # Encrypts the password using the secret key
+        self.password_hash = @password #Stores the hash of the password after being encrypted
+      rescue => err
+        puts "Exception: #{err}"
+        err
+      end
+    end
+    
   end
 
   def self.update_connections
+
     stdout = ""
     result = true
     Server.all.each do |server|
@@ -42,13 +56,21 @@ class Server < ActiveRecord::Base
 
   private 
 
-  # Digests the password using bcrypt. Custom encryption should override
-  # this method to apply their own algorithm.
-  #
-  # See https://github.com/plataformatec/devise-encryptable for examples
-  # of other encryption engines.
-  def password_digest(password)
-    Devise::Encryptor.digest(self.class, password)
+  def create_mock_up_connections
+
+  end
+
+  def password
+    begin
+      key_file = File.join(Rails.root, 'config', 'private_key.aes')
+      file = File.open(key_file, 'r')
+      key = file.gets
+      file.close
+      AES.decrypt(self.password_hash, key)
+    rescue => err
+      puts "Exception: #{err}"
+      err
+    end
   end
 
   def isolate_connections(last_lines)
