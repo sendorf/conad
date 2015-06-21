@@ -45,11 +45,10 @@ class Server < ActiveRecord::Base
   end
 
   def self.update_connections
-
     stdout = ""
     result = true
     Server.all.each do |server|
-      UpdateServerConnectionsWorker.perform_async server.id
+      UpdateServerConnectionsWorker.perform_async server.id, self.password
     end
     return result;
   end

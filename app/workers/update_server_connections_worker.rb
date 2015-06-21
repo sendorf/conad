@@ -1,7 +1,7 @@
 class UpdateServerConnectionsWorker
   include Sidekiq::Worker
 
-  def perform server_id
+  def perform server_id, password
     server = Server.find(server_id)
     begin
       Net::SSH.start(server.url, server.user, :password => password) do |ssh|
