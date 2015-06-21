@@ -48,7 +48,7 @@ class Server < ActiveRecord::Base
     Server.all.each do |server|
       UpdateServerConnectionsWorker.perform_async server.id
     end
-    return result;
+    return true;
   end
 
   def get_last_output
