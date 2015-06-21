@@ -3,15 +3,8 @@ class UpdateServerConnectionsWorker
 
   def perform server_id, password
     server = Server.find(server_id)
-    begin
-      Net::SSH.start(server.url, server.user, :password => password) do |ssh|
-
-        # capture only stdout with 'last' command
-        ssh.exec!("last") do |channel, stream, data|
-          stdout << data if stream == :stdout
-        end
-
-      end
+    result, stdout = server.get_last_output
+    if result
 
       last_lines = stdout.split("\n")
 
@@ -19,17 +12,12 @@ class UpdateServerConnectionsWorker
         result = false
       else
         #Creates the connections from the log obtained from 'last' command
-        isolate_connections(last_lines)
+        server.isolate_connections(last_lines)
         result = true
       end
 
-    rescue Net::SSH::AuthenticationFailed
-      result = false
-    rescue Exception => e
-      result = false
-    end
     # This generates false data to make experiments
-    if !result
+    else
       user_names = Connection.users
       if last_date = Connection.last_connection_for_server(server).first
         last_date = last_date.start_time

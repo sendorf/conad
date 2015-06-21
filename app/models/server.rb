@@ -45,30 +45,29 @@ class Server < ActiveRecord::Base
   end
 
   def self.update_connections
-    stdout = ""
-    result = true
     Server.all.each do |server|
       UpdateServerConnectionsWorker.perform_async server.id, self.password
     end
     return result;
   end
 
-  private 
-
-  def create_mock_up_connections
-
-  end
-
-  def password
+  def get_last_output
     begin
-      key_file = File.join(Rails.root, 'config', 'private_key.aes')
-      file = File.open(key_file, 'r')
-      key = file.gets
-      file.close
-      AES.decrypt(self.password_hash, key)
-    rescue => err
-      puts "Exception: #{err}"
-      err
+      stdout = ""
+      result = true
+      Net::SSH.start(server.url, server.user, :password => password) do |ssh|
+
+        # capture only stdout with 'last' command
+        ssh.exec!("last") do |channel, stream, data|
+          stdout << data if stream == :stdout
+        end
+
+      end
+      return result, stdout
+    rescue Net::SSH::AuthenticationFailed
+      return false, stdout
+    rescue Exception => e
+      return false, stdout
     end
   end
 
@@ -106,6 +105,21 @@ class Server < ActiveRecord::Base
 
     end
     true
+  end
+
+  private 
+
+  def password
+    begin
+      key_file = File.join(Rails.root, 'config', 'private_key.aes')
+      file = File.open(key_file, 'r')
+      key = file.gets
+      file.close
+      AES.decrypt(self.password_hash, key)
+    rescue => err
+      puts "Exception: #{err}"
+      err
+    end
   end
 
   def process_line(line)
