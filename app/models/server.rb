@@ -46,7 +46,7 @@ class Server < ActiveRecord::Base
 
   def self.update_connections
     Server.all.each do |server|
-      UpdateServerConnectionsWorker.perform_async server.id, self.password
+      UpdateServerConnectionsWorker.perform_async server.id
     end
     return result;
   end

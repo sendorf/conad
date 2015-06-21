@@ -1,7 +1,7 @@
 class UpdateServerConnectionsWorker
   include Sidekiq::Worker
 
-  def perform server_id, password
+  def perform server_id
     server = Server.find(server_id)
     result, stdout = server.get_last_output
     if result
