@@ -34,7 +34,7 @@ class Connection < ActiveRecord::Base
     # gets all connections for a date
     result = []
     # gets all connections of a server for a date
-    connections = month_server_connections(date, server).to_a
+    connections = date_server_connections(date, server).to_a
     # an array containing all users for these connections
     users = get_users_from_connections(connections)
     # hours to add to the start date
