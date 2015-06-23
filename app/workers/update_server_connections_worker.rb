@@ -8,12 +8,9 @@ class UpdateServerConnectionsWorker
 
       last_lines = stdout.split("\n")
 
-      if last_lines[0].split(" ")[3] == "denied"
-        result = false
-      else
+      unless last_lines[0].split(" ")[3] == "denied"
         #Creates the connections from the log obtained from 'last' command
         server.isolate_connections(last_lines)
-        result = true
       end
 
     # This generates false data to make experiments
