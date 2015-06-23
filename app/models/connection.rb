@@ -44,7 +44,7 @@ class Connection < ActiveRecord::Base
     while hours <= 23
       totals = {}
       connections.each do |connection|
-        if connection.start_time.hour <= hours && connection.end_time.hour > hours
+        if connection.start_time.hour <= hours && connection.end_time.hour >= hours
           if totals["#{connection.user}"]
             totals["#{connection.user}"] += 1
           else
