@@ -1,4 +1,4 @@
- # CONAD (CONnetions ADministrator)
+# CONAD (CONnetions ADministrator)
 
 This is a web application created in Rails as End of Studies proyect.
 
